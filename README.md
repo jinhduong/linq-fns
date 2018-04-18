@@ -1,6 +1,6 @@
 # eslinq
 .NET LINQ for Javascript, written by TypeScript.
-- Provide `IQueryable<T>`, 
+- Provide `IQueryable<T>`, it's reusable, also varibale and use `interator list` to call query.
 - Contains all the original .NET methods
 - Support `strong typing`
 
