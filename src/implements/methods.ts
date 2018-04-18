@@ -30,7 +30,13 @@ export class IteratorMethods<T> implements Methods<T> {
     }
 
     toList<S>(): Promise<S[]> {
-        if (this._data) return Promise.resolve(this._data as S[]);
+        if (this._data) {
+            let _result = Object.assign([], this._data as any[] | T[]);
+            this._iteratorCollection.forEach((ite: IIterator<T>) => {
+                _result = ite.execute(_result);
+            });
+            return Promise.resolve(_result as S[]);
+        }
         if (Utils.isPromise(this._source)) {
             return (this._source as Promise<T[]>).then(data => {
                 let _result = Object.assign([], data as any[] | T[]);
