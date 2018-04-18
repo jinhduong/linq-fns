@@ -30,7 +30,7 @@ console.log(query1.toList())
 // ['Best player is Messi']
 ```
 
-### Processing
+### Process
 - [x] from
 - [x] where
 - [x] select
