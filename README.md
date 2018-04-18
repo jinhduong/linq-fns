@@ -30,6 +30,51 @@ console.log(query1.toList())
 // ['Best player is Messi']
 ```
 
+### Processing
+- [x] from
+- [x] where
+- [x] select
+- [ ] selectMany
+- [ ] join
+- [ ] groupJoin
+- [ ] orderBy
+- [ ] orderByDescending
+- [ ] thenBy
+- [ ] thenByDescending
+- [ ] take
+- [ ] takeWhile
+- [ ] skip
+- [ ] groupBy
+- [ ] distinct
+- [ ] concat
+- [ ] zip
+- [ ] union
+- [ ] intersect
+- [ ] except
+- [ ] first
+- [ ] firstOrDefault
+- [ ] last
+- [ ] lastOrDefault
+- [ ] single
+- [ ] singleOrDefault
+- [ ] elementAt
+- [ ] elementAtOrDefault
+- [ ] orderByDescending
+- [ ] defaultIfEmpty
+- [ ] contains
+- [ ] reserve
+- [ ] sequenceEqual
+- [ ] any
+- [ ] all
+- [ ] count
+- [ ] longCount
+- [ ] min
+- [ ] max
+- [ ] sum
+- [ ] average
+- [ ] aggregate
+
+
 ### License
 
 [MIT License](http://opensource.org/licenses/MIT)
