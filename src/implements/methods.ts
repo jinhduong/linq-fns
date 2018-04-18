@@ -12,6 +12,8 @@ export class IteratorMethods<T> implements Methods<T> {
     // Contains initial source
     _source: any[] | Promise<any> | T[] | Promise<T> = [];
 
+    _data: any[];
+
     constructor(iteratorCollection: Array<IIterator<T>>, source: any[] | Promise<any> | T[] | Promise<T>) {
         this._iteratorCollection = iteratorCollection;
         this._source = source;
@@ -28,12 +30,14 @@ export class IteratorMethods<T> implements Methods<T> {
     }
 
     toList<S>(): Promise<S[]> {
+        if (this._data) return Promise.resolve(this._data as S[]);
         if (Utils.isPromise(this._source)) {
             return (this._source as Promise<T[]>).then(data => {
                 let _result = Object.assign([], data as any[] | T[]);
                 this._iteratorCollection.forEach((ite: IIterator<T>) => {
                     _result = ite.execute(_result);
                 });
+                this._data = data;
                 return _result as S[];
             });
         }
