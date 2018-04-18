@@ -38,7 +38,7 @@ async function main() {
 
     const num1 = await query1.toList();
     console.log(num1)
-    
+    // ['Best player is Messi']
 }
 
 main();
