@@ -1,0 +1,24 @@
+{
+  "name": "eslinq",
+  "version": "1.0.0",
+  "description": "LINQ for Javascript, written by TypeScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jinhduong/eslinq.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jinhduong/eslinq/issues"
+  },
+  "homepage": "https://github.com/jinhduong/eslinq#readme",
+  "devDependencies": {
+    "@types/node": "^9.6.5",
+    "typescript": "^2.8.1"
+  }
+}

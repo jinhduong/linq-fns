@@ -1,11 +1,3 @@
-# eslinq
-.NET LINQ for Javascript, written by TypeScript.
-- Provide `IQueryable<T>`, 
-- Contains all the original .NET methods
-- Support `strong typing`
-
-### Example
-```js
 import { Queryable } from "./implements/queryable";
 
 const queryable = new Queryable<{ name, overall }>();
@@ -28,8 +20,3 @@ let query1 = query
 
 console.log(query1.toList())
 // ['Best player is Messi']
-```
-
-### License
-
-[MIT License](http://opensource.org/licenses/MIT)
