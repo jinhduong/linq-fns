@@ -51,10 +51,10 @@ console.log(query1.toList())
 - [ ] union
 - [ ] intersect
 - [ ] except
-- [ ] first
-- [ ] firstOrDefault
-- [ ] last
-- [ ] lastOrDefault
+- [x] first //Promise
+- [x] firstOrDefault //Promise
+- [x] last //Promise
+- [x] lastOrDefault //Promise
 - [ ] single
 - [ ] singleOrDefault
 - [ ] elementAt
@@ -66,13 +66,14 @@ console.log(query1.toList())
 - [ ] sequenceEqual
 - [ ] any
 - [ ] all
-- [ ] count
+- [x] count //Promise
 - [ ] longCount
 - [ ] min
 - [ ] max
 - [ ] sum
 - [ ] average
 - [ ] aggregate
+- [ ] toList //Promise
 
 
 ### License

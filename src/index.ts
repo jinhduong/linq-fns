@@ -11,12 +11,12 @@ let query = queryable
     .from(source)
     .where(x => x.overall > 90);
 
-console.log(query.toList())
+query.count().then(x => console.log(x))
 // [{name:'Ronaldo', overall: 96}, {name:'Messi', overall: 98}]
 
 let query1 = query
     .where(x => x.overall > 96)
     .select(x => `Best player is ${x.name}`);
 
-console.log(query1.toList())
+query1.toList().then(res => console.log(res));
 // ['Best player is Messi']
