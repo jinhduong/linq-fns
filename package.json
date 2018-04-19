@@ -19,6 +19,7 @@
   "homepage": "https://github.com/jinhduong/eslinq#readme",
   "devDependencies": {
     "@types/node": "^9.6.5",
+    "typedoc": "^0.11.1",
     "typescript": "^2.8.1"
   }
 }

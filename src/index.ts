@@ -20,7 +20,7 @@ async function main() {
         .from(promiseApi)
         .where(x => x.overall > 90);
 
-    const count = await query.count();
+    const count = await query.count(x => x.overall > 96);
     console.log(count)
     // 2
 
@@ -30,7 +30,7 @@ async function main() {
 
     const num1 = await query1.toList();
     console.log(num1)
-    
+
 }
 
 main();
