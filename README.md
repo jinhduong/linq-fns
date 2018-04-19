@@ -49,7 +49,7 @@ main();
 - [x] where
 - [x] select
 - [ ] selectMany
-- [ ] join
+- [x] join
 - [ ] groupJoin
 - [ ] orderBy
 - [ ] orderByDescending
