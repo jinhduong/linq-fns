@@ -7,4 +7,8 @@ export interface Methods<T> {
     last(iterator?: (entity: T) => boolean): Promise<T>;
     lastOrDefault(iterator?: (entity: T) => boolean): Promise<T>;
     count(iterator?: (entity: T) => boolean): Promise<number>;
+    take(value: number): Methods<T>;
+    skip(value: number): Methods<T>;
+    skipWhile(iterator: (entity: T) => boolean): Methods<T>;
+    takeWhile(iterator: (entity: T) => boolean): Methods<T>;
 }

@@ -17,20 +17,10 @@ let promiseApi = new Promise((resolve, reject) => {
 async function main() {
     // Just query not execute query
     let query = queryable
-        .from(promiseApi)
-        .where(x => x.overall > 90);
+        .from(promiseApi).skipWhile(x => x.overall < 90);
 
-    const count = await query.count(x => x.overall > 96);
-    console.log(count)
-    // 2
-
-    let query1 = query
-        .where(x => x.overall > 96)
-        .select(x => `Best player is ${x.name}`);
-
-    const num1 = await query1.toList();
-    console.log(num1)
-
+    const data = await query.toList();
+    console.log(data);
 }
 
 main();

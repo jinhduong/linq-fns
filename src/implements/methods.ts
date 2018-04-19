@@ -6,6 +6,10 @@ import { Utils } from "../utils/object";
 import { FirstClause } from "../methods/first";
 import { LastClause } from "../methods/last";
 import { CountClause } from "../methods/count";
+import { TakeClause } from "../methods/take";
+import { SkipClause } from "../methods/skip";
+import { SkipWhileClause } from "../methods/skipWhile";
+import { TakeWhileClause } from "../methods/takeWhile";
 
 export class IteratorMethods<T> implements Methods<T> {
 
@@ -83,6 +87,25 @@ export class IteratorMethods<T> implements Methods<T> {
         return this.toList().then((data: T[]) => {
             return (new CountClause(iterator).execute(data) || null) as number;
         });
+    }
+
+    take(value: number): Methods<T> {
+        this._iteratorCollection.push(new TakeClause(value));
+        return this;
+    }
+
+    skip(value: number): Methods<T> {
+        this._iteratorCollection.push(new SkipClause(value));
+        return this;
+    }
+
+    skipWhile(iterator: (entity: T) => boolean): Methods<T> {
+        this._iteratorCollection.push(new SkipWhileClause(iterator));
+        return this;
+    }
+    takeWhile(iterator: (entity: T) => boolean): Methods<T> {
+        this._iteratorCollection.push(new TakeWhileClause(iterator));
+        return this;
     }
 
     // Private funstions

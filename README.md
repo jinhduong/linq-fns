@@ -55,9 +55,10 @@ main();
 - [ ] orderByDescending
 - [ ] thenBy
 - [ ] thenByDescending
-- [ ] take
-- [ ] takeWhile
-- [ ] skip
+- [x] take
+- [x] takeWhile
+- [x] skip
+- [x] skipWhile
 - [ ] groupBy
 - [ ] distinct
 - [ ] concat
@@ -87,7 +88,7 @@ main();
 - [ ] sum
 - [ ] average
 - [ ] aggregate
-- [ ] toList : `Promise`
+- [x] toList : `Promise`
 
 
 ### License
