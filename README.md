@@ -48,8 +48,9 @@ main();
 - [x] from
 - [x] where
 - [x] select
-- [ ] selectMany
+- [x] selectMany
 - [x] join
+- [x] leftJoin
 - [ ] groupJoin
 - [ ] orderBy
 - [ ] orderByDescending

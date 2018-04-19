@@ -4,7 +4,7 @@
   "description": "LINQ for Javascript, written by TypeScript",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha -r ts-node/register src/**/*.test.ts"
   },
   "repository": {
     "type": "git",
@@ -18,7 +18,12 @@
   },
   "homepage": "https://github.com/jinhduong/eslinq#readme",
   "devDependencies": {
+    "@types/chai": "^4.1.2",
+    "@types/mocha": "^5.1.0",
     "@types/node": "^9.6.5",
+    "chai": "^4.1.2",
+    "mocha": "^5.1.1",
+    "ts-node": "^6.0.0",
     "typedoc": "^0.11.1",
     "typescript": "^2.8.1"
   }

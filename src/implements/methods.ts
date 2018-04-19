@@ -11,9 +11,10 @@ import { SkipClause } from "../methods/skip";
 import { SkipWhileClause } from "../methods/skipWhile";
 import { TakeWhileClause } from "../methods/takeWhile";
 import { JoinClause } from "../methods/join";
+import { LeftJoinClause } from "../methods/leftJoin";
+import { SelectManyClause } from "../methods/selectMany";
 
 export class IteratorMethods<T> implements Methods<T> {
-
 
     // Contains all iterators
     _iteratorCollection: Array<IIterator<T>> = [];
@@ -38,8 +39,18 @@ export class IteratorMethods<T> implements Methods<T> {
         return this as any;
     }
 
+    selectMany<S>(iterator: (entity: T) => S): Methods<S> {
+        this._iteratorCollection.push(new SelectManyClause(iterator))
+        return this as any;
+    }
+
     join<S, U>(source: S[] | Promise<S[]>, iterator: (aEntity: T, bEntity: S) => boolean): Methods<U> {
         this._iteratorCollection.push(new JoinClause(source, iterator));
+        return this as any;
+    }
+
+    leftJoin<S, U>(source: S[] | Promise<S[]>, iterator: (aEntity: T, bEntity: S) => boolean): Methods<U> {
+        this._iteratorCollection.push(new LeftJoinClause(source, iterator));
         return this as any;
     }
 

@@ -7,7 +7,7 @@ import { Methods } from "../intefaces/methods.interface";
 export class Queryable<T> implements IQueryable<T> {
     _iteratorCollection: Array<IIterator<T>> = [];
 
-    from(source: any[] | Promise<any> | T[] | Promise<T>): Methods<T> {
+    from(source: Promise<any> | T[] | Promise<T> | any[]): Methods<T> {
         return new IteratorMethods(this._iteratorCollection, source);
     }
 }
