@@ -1,58 +1,59 @@
-# eslinq
+# 👴 eslinq
 .NET LINQ for Javascript, written by TypeScript.
-- Provide `IQueryable<T>`, it's reusable, also variable and use `iterator list` to call query.
-- Contains all the original .NET methods
-- Support `strong typing`
+- Provide `IQueryable<T>`, it's reusable, also variable and use `iterator list` for holding query and execute.
+- Contains almost the original .NET and some extends methods.
 
 ### Example
-```js
-import { Queryable } from "../implements/queryable";
-
+```ts
 const queryable = new Queryable<{ name, nationId, overall, skills }>();
 
 let promiseApi = new Promise((resolve, reject) => {
-    // Fake data from api
+    // skills: attack, stamia, speed, shoot
     setTimeout(() => {
         console.log('...get data');
         resolve([
-            { name: 'Ronaldo', overall: 96, nationId: 1, skills: [97, 90, 86, 95] },
-            { name: 'Messi', overall: 98, nationId: 2, skills: [97, 90, 86, 95] },
-            { name: 'Mbappe', overall: 86, nationId: 3, skills: [97, 90, 86, 95] },
-            { name: 'Salah', overall: 89, nationId: 4, skills: [97, 90, 86, 95] }
+            { name: 'Ronaldo', overall: 96, nationId: 1, skills: [96, 85, 87, 91] },
+            { name: 'Messi', overall: 98, nationId: 2, skills: [97, 85, 91, 93] },
+            { name: 'Mbappe', overall: 86, nationId: 3, skills: [89, 81, 95, 83] },
+            { name: 'Salah', overall: 89, nationId: 4, skills: [88, 82, 97, 86] }
         ]);
     }, 1000);
 })
 
-let staticLoopkup = [
+let nations = [
     { id: 1, name: 'Portugal', areaId: 1 },
     { id: 2, name: 'Argentina', areaId: 2 },
     { id: 3, name: 'France', areaId: 1 },
     { id: 4, name: 'Egypt', areaId: 3 }
 ]
 
-let staticAreas = [
+let continents = [
     { id: 1, areaName: 'Euro' },
     { id: 2, areaName: 'South America' },
 ]
 
-async function main() {
-    // Just query not call promise
+function main() {
+    // Just query
+    console.time('querytime');
     let query = queryable
         .from(promiseApi)
-        .join(staticLoopkup, (x, y) => x.nationId == y.id)
-        .select((o) => {
+        .join(nations, (pl, na) => pl.nationId === na.id)
+        .leftJoin(continents, (plNation, co) => plNation.y.areaId === co.id)
+        .select(o => {
             return {
                 playerName: o.x.name,
                 overall: o.x.overall,
-                nation: o.y.name
-            };
+                nation: o.y.name,
+                area: o.areaName
+            }
         })
-        .orderBy(x => x.playerName);
+        .groupBy(x => x.area)
+        .orderByDescending(x => x.key);
 
-    // Call promise and execute all query methods
-    const data = await query.toList();
-    console.log(data);
-
+    // call toList() to execute data
+    const data = query.toList().then(data => {
+        console.log(data);
+    });
 }
 
 main();
