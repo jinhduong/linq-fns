@@ -34,7 +34,6 @@ let continents = [
 
 function main() {
     // Just query
-    console.time('querytime');
     let query = queryable
         .from(promiseApi)
         .join(nations, (pl, na) => pl.nationId === na.id)
@@ -54,6 +53,10 @@ function main() {
     const data = query.toList().then(data => {
         console.log(data);
     });
+    
+    // [{ keys: "Euro", items: [{ playerName: "Ronaldo",... }, { playerName:"Mbappe",... }] },
+    //  { keys: "South America", items: [ { playerName: "Messi" }]
+    // ]
 }
 
 main();
