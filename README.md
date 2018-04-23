@@ -89,7 +89,7 @@ main();
 - [x] sum : `Promise<number>`
 - [x] average
 - [ ] aggregate
-- [x] toList : `Promise<T>`
+- [x] toList : `Promise<T[]>`
 
 
 ### License
