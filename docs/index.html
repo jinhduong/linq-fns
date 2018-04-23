@@ -64,47 +64,62 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="eslinq">eslinq</h1>
+				<h1 id="-eslinq">👴 eslinq</h1>
 				<p>.NET LINQ for Javascript, written by TypeScript.</p>
 				<ul>
-					<li>Provide <code>IQueryable&lt;T&gt;</code>, it&#39;s reusable, also variable and use <code>iterator list</code> to call query.</li>
-					<li>Contains all the original .NET methods</li>
-					<li>Support <code>strong typing</code></li>
+					<li>Provide <code>IQueryable&lt;T&gt;</code>, it&#39;s reusable, also variable and use <code>iterator list</code> for holding query and execute.</li>
+					<li>Contains almost the original .NET and some extends methods.</li>
 				</ul>
 				<h3 id="example">Example</h3>
-				<pre><code class="lang-js"><span class="hljs-keyword">import</span> { Queryable } <span class="hljs-keyword">from</span> <span class="hljs-string">"./implements/queryable"</span>;
-
-<span class="hljs-keyword">const</span> queryable = <span class="hljs-keyword">new</span> Queryable&lt;{ name, overall }&gt;();
+				<pre><code class="lang-ts"><span class="hljs-keyword">const</span> queryable = <span class="hljs-keyword">new</span> Queryable&lt;{ name, nationId, overall, skills }&gt;();
 
 <span class="hljs-keyword">let</span> promiseApi = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
-    <span class="hljs-comment">// Fake data from api</span>
+    <span class="hljs-comment">// skills: attack, stamia, speed, shoot</span>
     setTimeout(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
         <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'...get data'</span>);
         resolve([
-            { <span class="hljs-attr">name</span>: <span class="hljs-string">'Ronaldo'</span>, <span class="hljs-attr">overall</span>: <span class="hljs-number">96</span> },
-            { <span class="hljs-attr">name</span>: <span class="hljs-string">'Messi'</span>, <span class="hljs-attr">overall</span>: <span class="hljs-number">98</span> },
-            { <span class="hljs-attr">name</span>: <span class="hljs-string">'Mbappe'</span>, <span class="hljs-attr">overall</span>: <span class="hljs-number">86</span> },
+            { name: <span class="hljs-string">'Ronaldo'</span>, overall: <span class="hljs-number">96</span>, nationId: <span class="hljs-number">1</span>, skills: [<span class="hljs-number">96</span>, <span class="hljs-number">85</span>, <span class="hljs-number">87</span>, <span class="hljs-number">91</span>] },
+            { name: <span class="hljs-string">'Messi'</span>, overall: <span class="hljs-number">98</span>, nationId: <span class="hljs-number">2</span>, skills: [<span class="hljs-number">97</span>, <span class="hljs-number">85</span>, <span class="hljs-number">91</span>, <span class="hljs-number">93</span>] },
+            { name: <span class="hljs-string">'Mbappe'</span>, overall: <span class="hljs-number">86</span>, nationId: <span class="hljs-number">3</span>, skills: [<span class="hljs-number">89</span>, <span class="hljs-number">81</span>, <span class="hljs-number">95</span>, <span class="hljs-number">83</span>] },
+            { name: <span class="hljs-string">'Salah'</span>, overall: <span class="hljs-number">89</span>, nationId: <span class="hljs-number">4</span>, skills: [<span class="hljs-number">88</span>, <span class="hljs-number">82</span>, <span class="hljs-number">97</span>, <span class="hljs-number">86</span>] }
         ]);
-    }, <span class="hljs-number">3000</span>);
+    }, <span class="hljs-number">1000</span>);
 })
 
-<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">main</span>(<span class="hljs-params"></span>) </span>{
-    <span class="hljs-comment">// Just query not execute query</span>
+<span class="hljs-keyword">let</span> nations = [
+    { id: <span class="hljs-number">1</span>, name: <span class="hljs-string">'Portugal'</span>, areaId: <span class="hljs-number">1</span> },
+    { id: <span class="hljs-number">2</span>, name: <span class="hljs-string">'Argentina'</span>, areaId: <span class="hljs-number">2</span> },
+    { id: <span class="hljs-number">3</span>, name: <span class="hljs-string">'France'</span>, areaId: <span class="hljs-number">1</span> },
+    { id: <span class="hljs-number">4</span>, name: <span class="hljs-string">'Egypt'</span>, areaId: <span class="hljs-number">3</span> }
+]
+
+<span class="hljs-keyword">let</span> continents = [
+    { id: <span class="hljs-number">1</span>, areaName: <span class="hljs-string">'Euro'</span> },
+    { id: <span class="hljs-number">2</span>, areaName: <span class="hljs-string">'South America'</span> },
+]
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">main</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-comment">// Just query</span>
+    <span class="hljs-built_in">console</span>.time(<span class="hljs-string">'querytime'</span>);
     <span class="hljs-keyword">let</span> query = queryable
         .from(promiseApi)
-        .where(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> x.overall &gt; <span class="hljs-number">90</span>);
+        .join(nations, <span class="hljs-function">(<span class="hljs-params">pl, na</span>) =&gt;</span> pl.nationId === na.id)
+        .leftJoin(continents, <span class="hljs-function">(<span class="hljs-params">plNation, co</span>) =&gt;</span> plNation.y.areaId === co.id)
+        .select(<span class="hljs-function"><span class="hljs-params">o</span> =&gt;</span> {
+            <span class="hljs-keyword">return</span> {
+                playerName: o.x.name,
+                overall: o.x.overall,
+                nation: o.y.name,
+                area: o.areaName
+            }
+        })
+        .groupBy(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> x.area)
+        .orderByDescending(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> x.key);
 
-    <span class="hljs-keyword">const</span> count = <span class="hljs-keyword">await</span> query.count();
-    <span class="hljs-built_in">console</span>.log(count)
-    <span class="hljs-comment">// 2</span>
-
-    <span class="hljs-keyword">let</span> query1 = query
-        .where(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> x.overall &gt; <span class="hljs-number">96</span>)
-        .select(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> <span class="hljs-string">`Best player is <span class="hljs-subst">${x.name}</span>`</span>);
-
-    <span class="hljs-keyword">const</span> num1 = <span class="hljs-keyword">await</span> query1.toList();
-    <span class="hljs-built_in">console</span>.log(num1)
-    <span class="hljs-comment">// ['Best player is Messi']</span>
+    <span class="hljs-comment">// call toList() to execute data</span>
+    <span class="hljs-keyword">const</span> data = query.toList().then(<span class="hljs-function"><span class="hljs-params">data</span> =&gt;</span> {
+        <span class="hljs-built_in">console</span>.log(data);
+    });
 }
 
 main();
@@ -114,29 +129,29 @@ main();
 					<li>[x] from</li>
 					<li>[x] where</li>
 					<li>[x] select</li>
-					<li>[ ] selectMany</li>
-					<li>[ ] join</li>
+					<li>[x] selectMany</li>
+					<li>[x] join</li>
+					<li>[x] leftJoin</li>
 					<li>[ ] groupJoin</li>
-					<li>[ ] orderBy</li>
-					<li>[ ] orderByDescending</li>
-					<li>[ ] thenBy</li>
-					<li>[ ] thenByDescending</li>
-					<li>[ ] take</li>
-					<li>[ ] takeWhile</li>
-					<li>[ ] skip</li>
-					<li>[ ] groupBy</li>
+					<li>[x] orderBy</li>
+					<li>[x] orderByDescending</li>
+					<li>[x] take</li>
+					<li>[x] takeWhile</li>
+					<li>[x] skip</li>
+					<li>[x] skipWhile</li>
+					<li>[x] groupBy</li>
 					<li>[ ] distinct</li>
 					<li>[ ] concat</li>
 					<li>[ ] zip</li>
 					<li>[ ] union</li>
 					<li>[ ] intersect</li>
 					<li>[ ] except</li>
-					<li>[x] first : <code>Promise</code></li>
-					<li>[x] firstOrDefault : <code>Promise</code></li>
-					<li>[x] last : <code>Promise</code></li>
-					<li>[x] lastOrDefault : <code>Promise</code></li>
-					<li>[ ] single</li>
-					<li>[ ] singleOrDefault</li>
+					<li>[x] first : <code>Promise&lt;T&gt;</code></li>
+					<li>[x] firstOrDefault : <code>Promise&lt;T | null&gt;</code></li>
+					<li>[x] last : <code>Promise&lt;T&gt;</code></li>
+					<li>[x] lastOrDefault : <code>Promise&lt;T | null&gt;</code></li>
+					<li>[x] single</li>
+					<li>[x] singleOrDefault</li>
 					<li>[ ] elementAt</li>
 					<li>[ ] elementAtOrDefault</li>
 					<li>[ ] orderByDescending</li>
@@ -144,16 +159,16 @@ main();
 					<li>[ ] contains</li>
 					<li>[ ] reserve</li>
 					<li>[ ] sequenceEqual</li>
-					<li>[ ] any</li>
+					<li>[x] any : <code>Promise&lt;boolean&gt;</code></li>
 					<li>[ ] all</li>
-					<li>[x] count : <code>Promise</code></li>
+					<li>[x] count : <code>Promise&lt;number&gt;</code></li>
 					<li>[ ] longCount</li>
-					<li>[ ] min</li>
-					<li>[ ] max</li>
-					<li>[ ] sum</li>
-					<li>[ ] average</li>
+					<li>[x] min : <code>Promise&lt;number&gt;</code></li>
+					<li>[x] max : <code>Promise&lt;number&gt;</code></li>
+					<li>[x] sum : <code>Promise&lt;number&gt;</code></li>
+					<li>[x] average</li>
 					<li>[ ] aggregate</li>
-					<li>[ ] toList : <code>Promise</code></li>
+					<li>[x] toList : <code>Promise&lt;T[]&gt;</code></li>
 				</ul>
 				<h3 id="license">License</h3>
 				<p><a href="http://opensource.org/licenses/MIT">MIT License</a></p>
@@ -165,46 +180,103 @@ main();
 					<li class="globals  ">
 						<a href="globals.html"><em>Globals</em></a>
 					</li>
-					<li class="label tsd-is-external">
-						<span>Internals</span>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_demo_test_.html">"demo/test"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_implements_methods_.html">"implements/methods"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_implements_queryable_.html">"implements/queryable"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/_index_.html">"index"</a>
 					</li>
-					<li class="label tsd-is-external">
-						<span>Externals</span>
-					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="modules/_implements_methods_.html">"implements/methods"</a>
-					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="modules/_implements_queryable_.html">"implements/queryable"</a>
-					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-external-module">
 						<a href="modules/_intefaces_iqueryable_interface_.html">"intefaces/iqueryable.interface"</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-external-module">
 						<a href="modules/_intefaces_iterator_interface_.html">"intefaces/iterator.interface"</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-external-module">
 						<a href="modules/_intefaces_methods_interface_.html">"intefaces/methods.interface"</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_methods_any_.html">"methods/any"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_methods_average_.html">"methods/average"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="modules/_methods_count_.html">"methods/count"</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-external-module">
 						<a href="modules/_methods_first_.html">"methods/first"</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_methods_groupby_.html">"methods/group<wbr>By"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_methods_join_.html">"methods/join"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="modules/_methods_last_.html">"methods/last"</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_methods_leftjoin_.html">"methods/left<wbr>Join"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_methods_max_.html">"methods/max"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_methods_min_.html">"methods/min"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_methods_orderby_.html">"methods/order<wbr>By"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_methods_orderbydescending_.html">"methods/order<wbr>ByDescending"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="modules/_methods_select_.html">"methods/select"</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_methods_selectmany_.html">"methods/select<wbr>Many"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_methods_single_.html">"methods/single"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_methods_skip_.html">"methods/skip"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_methods_skipwhile_.html">"methods/skip<wbr>While"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_methods_sum_.html">"methods/sum"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_methods_take_.html">"methods/take"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_methods_takewhile_.html">"methods/take<wbr>While"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="modules/_methods_where_.html">"methods/where"</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_test_join_test_.html">"test/join.test"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_test_leftjoin_test_.html">"test/left<wbr>Join.test"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_test_selectmany_test_.html">"test/select<wbr>Many.test"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_test_source_.html">"test/source"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="modules/_utils_object_.html">"utils/object"</a>
 					</li>
 				</ul>
