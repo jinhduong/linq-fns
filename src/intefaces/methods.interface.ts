@@ -11,6 +11,7 @@ export interface Methods<T> {
     orderByDescending(iterator: (entity: T) => T): Methods<T>;
     join<S>(source: S[] | Promise<S[]>, iterator: (aEntity: T, bEntity: S) => boolean): Methods<{ x: T, y: S }>;
     leftJoin<S, U extends T & S>(source: S[] | Promise<S[]>, iterator: (aEntity: T, bEntity: S) => boolean): Methods<U>;
+    groupBy(iterator: (entity: T) => any): Methods<{ key: any, items: T[] }>;
 
     // Execute methods
     toList<S extends T>(): Promise<S[]>;

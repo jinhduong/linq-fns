@@ -23,7 +23,8 @@ import { OrderByClause } from "../methods/orderBy";
 import { OrderByDescendingClause } from "../methods/orderByDescending";
 
 export class IteratorMethods<T> implements Methods<T> {
-    
+
+
     // Contains all iterators
     _iteratorCollection: Array<IIterator<T>> = [];
 
@@ -70,6 +71,10 @@ export class IteratorMethods<T> implements Methods<T> {
     orderByDescending(iterator: (entity: T) => T): Methods<T> {
         this._iteratorCollection.push(new OrderByDescendingClause(iterator));
         return this;
+    }
+
+    groupBy(iterator: (entity: T) => any): Methods<{ key: any; items: T[]; }> {
+        throw new Error("Method not implemented.");
     }
 
     toList<S>(): Promise<S[]> {
