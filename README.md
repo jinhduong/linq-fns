@@ -36,7 +36,7 @@ let staticAreas = [
 ]
 
 async function main() {
-    // Just query not execute query
+    // Just query not call promise
     let query = queryable
         .from(promiseApi)
         .join(staticLoopkup, (x, y) => x.nationId == y.id)
@@ -49,7 +49,7 @@ async function main() {
         })
         .orderBy(x => x.playerName);
 
-
+    // Call promise and execute all query methods
     const data = await query.toList();
     console.log(data);
 
