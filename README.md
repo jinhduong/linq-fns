@@ -54,8 +54,8 @@ function main() {
         console.log(data);
     });
     
-    // [{ keys: "Euro", items: [{ playerName: "Ronaldo",... }, { playerName:"Mbappe",... }] },
-    //  { keys: "South America", items: [ { playerName: "Messi" }]
+    // [{ key: "Euro", items: [{ playerName: "Ronaldo",... }, { playerName:"Mbappe",... }] },
+    //  { key: "South America", items: [ { playerName: "Messi" }]
     // ]
 }
 
