@@ -68,8 +68,6 @@ main();
 - [ ] groupJoin
 - [x] orderBy
 - [x] orderByDescending
-- [ ] thenBy
-- [ ] thenByDescending
 - [x] take
 - [x] takeWhile
 - [x] skip
