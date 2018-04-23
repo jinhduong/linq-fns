@@ -22,9 +22,12 @@
     "@types/mocha": "^5.1.0",
     "@types/node": "^9.6.5",
     "chai": "^4.1.2",
+    "html-webpack-plugin": "^3.2.0",
     "mocha": "^5.1.1",
+    "request": "^2.85.0",
     "ts-node": "^6.0.0",
     "typedoc": "^0.11.1",
-    "typescript": "^2.8.1"
+    "typescript": "^2.8.1",
+    "webpack": "^4.6.0"
   }
 }

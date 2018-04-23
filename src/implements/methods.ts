@@ -21,6 +21,7 @@ import { AnyClause } from "../methods/any";
 import { AvarageClause } from "../methods/average";
 import { OrderByClause } from "../methods/orderBy";
 import { OrderByDescendingClause } from "../methods/orderByDescending";
+import { GroupByClause } from "../methods/groupBy";
 
 export class IteratorMethods<T> implements Methods<T> {
 
@@ -74,7 +75,8 @@ export class IteratorMethods<T> implements Methods<T> {
     }
 
     groupBy(iterator: (entity: T) => any): Methods<{ key: any; items: T[]; }> {
-        throw new Error("Method not implemented.");
+        this._iteratorCollection.push(new GroupByClause(iterator));
+        return this as any;
     }
 
     toList<S>(): Promise<S[]> {

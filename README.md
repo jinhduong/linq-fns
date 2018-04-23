@@ -74,7 +74,7 @@ main();
 - [x] takeWhile
 - [x] skip
 - [x] skipWhile
-- [ ] groupBy
+- [x] groupBy
 - [ ] distinct
 - [ ] concat
 - [ ] zip

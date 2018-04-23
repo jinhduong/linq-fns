@@ -9,34 +9,41 @@ export class GroupByClause<T> implements IIterator<T> {
 
         if (!source) return null;
 
-        // Object contains all data in array follow by [index] : {object}
-        let _tmp = {};
+        let _mappingSource = {}; // Object contains all data in array follow by [index] : {object}
+        let _indexes = [] as Array<{ value, index }>; // Make indexes table base on iterator function
+        let _groupByObj = {} // Object contains [groupByValue] : <any>[]
+        let _distinctGroupByValues = this.distinct
+            (new SelectClause(this._iterator).execute(source));
 
+        // Make mapping source by indexes
         source.forEach((x: T, i: number) => {
-            _tmp[i] = x;
+            _mappingSource[i] = x;
         });
 
         // Make lookup list base on input iterator function
-        let _result = (source as T[]).map((x: T, index: number) => {
+        _indexes = (source as T[]).map((x: T, index: number) => {
             return {
                 value: (this._iterator(x)),
                 index: index
             }
-        });
+        }).filter(x => x.value != undefined);
 
-        let _distinctGroupByValues =
-            this.distinct(new SelectClause(this._iterator).execute(source));
-
-        // Prepare
-        let _keyLookup = {};
+        // Preparing
         _distinctGroupByValues.forEach(key => {
-            _keyLookup[key] = [];
+            _groupByObj[key] = [];
         });
 
-        if (!_result) return null;
+        if (!_groupByObj) return null;
 
-        _result.forEach(lk => {
-            _keyLookup[lk.value] = _tmp[lk.index];
+        _indexes.forEach(lk => {
+            (_groupByObj[lk.value] as T[]).push(_mappingSource[lk.index]);
+        });
+
+        return Object.keys(_groupByObj).map(groupByProp => {
+            return {
+                key: groupByProp,
+                items: _groupByObj[groupByProp]
+            };
         });
     }
 
@@ -47,6 +54,6 @@ export class GroupByClause<T> implements IIterator<T> {
     private distinct(array: any[]) {
         return array.filter((val, index, self) => {
             return self.indexOf(val) === index;
-        });
+        }).filter(x => x != undefined);
     }
 }

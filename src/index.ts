@@ -1,1 +1,1 @@
-export * from './implements/queryable';
+export { Queryable } from './implements/queryable';

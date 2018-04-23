@@ -1,4 +1,5 @@
 import { Queryable } from "../implements/queryable";
+const request = require('request');
 
 const queryable = new Queryable<{ name, nationId, overall, skills }>();
 
@@ -10,7 +11,7 @@ let promiseApi = new Promise((resolve, reject) => {
             { name: 'Ronaldo', overall: 96, nationId: 1, skills: [97, 90, 86, 95] },
             { name: 'Messi', overall: 98, nationId: 2, skills: [97, 90, 86, 95] },
             { name: 'Mbappe', overall: 86, nationId: 3, skills: [97, 90, 86, 95] },
-            { name: 'Salah', overall: 89, nationId: 4, skills: [97, 90, 86, 95] }
+            { name: 'Salah', overall: 89, nationId: 4, skills: [97, 90, 86, 95] },
         ]);
     }, 1000);
 })
@@ -27,15 +28,32 @@ let staticAreas = [
     { id: 2, areaName: 'South America' },
 ]
 
-async function main() {
+function main() {
     // Just query not execute query
+    console.time('querytime');
     let query = queryable
         .from(promiseApi)
-        .join(staticLoopkup, (x, y) => x.nationId == y.id)
-        .orderBy(x => x.x.name);
+        .join(staticLoopkup, (x, y) => x.nationId === y.id)
+        .leftJoin(staticAreas, (o, z) => o.y.areaId === z.id)
+        .select(o => {
+            return {
+                playerName: o.x.name,
+                overall: o.x.overall,
+                nation: o.y.name,
+                area: o.areaName,
+            }
+        })
+        .groupBy(x => x.area)
+        .orderByDescending(x => x.key);
 
-    const data = await query.toList();
-    console.log(data);
+    console.timeEnd('querytime');
+
+    console.time('executetime');
+    const data = query.toList().then(data => {
+        console.timeEnd('executetime');
+        console.log(data);
+    });
+
 
 }
 
