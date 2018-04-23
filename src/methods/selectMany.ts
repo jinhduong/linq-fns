@@ -3,7 +3,7 @@ import { SelectClause } from "./select";
 
 export class SelectManyClause<T> implements IIterator<T> {
 
-    _iterator: (item: T, index?: number) => boolean;
+    _iterator: (item: T, index?: number) => any;
 
     execute(source: any[] | T[]): T[] | any[] {
         if (!source) return null;

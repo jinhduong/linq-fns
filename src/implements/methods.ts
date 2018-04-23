@@ -13,9 +13,17 @@ import { TakeWhileClause } from "../methods/takeWhile";
 import { JoinClause } from "../methods/join";
 import { LeftJoinClause } from "../methods/leftJoin";
 import { SelectManyClause } from "../methods/selectMany";
+import { SumClause } from "../methods/sum";
+import { MinClause } from "../methods/min";
+import { MaxClause } from "../methods/max";
+import { SingleClause } from "../methods/single";
+import { AnyClause } from "../methods/any";
+import { AvarageClause } from "../methods/average";
+import { OrderByClause } from "../methods/orderBy";
+import { OrderByDescendingClause } from "../methods/orderByDescending";
 
 export class IteratorMethods<T> implements Methods<T> {
-
+    
     // Contains all iterators
     _iteratorCollection: Array<IIterator<T>> = [];
 
@@ -52,6 +60,16 @@ export class IteratorMethods<T> implements Methods<T> {
     leftJoin<S, U>(source: S[] | Promise<S[]>, iterator: (aEntity: T, bEntity: S) => boolean): Methods<U> {
         this._iteratorCollection.push(new LeftJoinClause(source, iterator));
         return this as any;
+    }
+
+    orderBy(iterator: (entity: T) => T): Methods<T> {
+        this._iteratorCollection.push(new OrderByClause(iterator));
+        return this;
+    }
+
+    orderByDescending(iterator: (entity: T) => T): Methods<T> {
+        this._iteratorCollection.push(new OrderByDescendingClause(iterator));
+        return this;
     }
 
     toList<S>(): Promise<S[]> {
@@ -107,6 +125,44 @@ export class IteratorMethods<T> implements Methods<T> {
         });
     }
 
+    sum<S>(iterator: (entity: T) => S): Promise<number> {
+        return this.toList().then((data: T[]) => {
+            return (new SumClause(iterator).execute(data) || null) as number;
+        });
+    }
+
+    avarage<S>(iterator: (entity: T) => S): Promise<number> {
+        return this.toList().then((data: T[]) => {
+            return (new AvarageClause(iterator).execute(data) || 0) as number;
+        });
+    }
+
+    min<S>(iterator: (entity: T) => S): Promise<number> {
+        return this.toList().then((data: T[]) => {
+            return (new MinClause(iterator).execute(data) || null) as number;
+        });
+    }
+
+    max<S>(iterator: (entity: T) => S): Promise<number> {
+        return this.toList().then((data: T[]) => {
+            return (new MaxClause(iterator).execute(data) || null) as number;
+        });
+    }
+
+    single(iterator?: (entity: T) => boolean): Promise<T> {
+        return this.toList().then((data: T[]) => {
+            if (!data) throw new Error("Single require source is not null");
+            return new SingleClause(iterator).execute(data);
+
+        });
+    }
+
+    singleOrDefault(iterator?: (entity: T) => boolean): Promise<T> {
+        return this.toList().then((data: T[]) => {
+            return new SingleClause(iterator).execute(data) || null;
+        });
+    }
+
     take(value: number): Methods<T> {
         this._iteratorCollection.push(new TakeClause(value));
         return this;
@@ -121,9 +177,16 @@ export class IteratorMethods<T> implements Methods<T> {
         this._iteratorCollection.push(new SkipWhileClause(iterator));
         return this;
     }
+
     takeWhile(iterator: (entity: T) => boolean): Methods<T> {
         this._iteratorCollection.push(new TakeWhileClause(iterator));
         return this;
+    }
+
+    any<T>(iterator: (entity: T) => boolean): Promise<boolean> {
+        return this.toList().then((data: T[]) => {
+            return new AnyClause(iterator).execute(data);
+        });
     }
 
     // Private funstions

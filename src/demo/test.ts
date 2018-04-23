@@ -31,11 +31,12 @@ async function main() {
     // Just query not execute query
     let query = queryable
         .from(promiseApi)
-        .where(x => x.overall > 90)
-        .selectMany(x => x.skills);
+        .join(staticLoopkup, (x, y) => x.nationId == y.id)
+        .orderBy(x => x.x.name);
 
     const data = await query.toList();
     console.log(data);
+
 }
 
 main();

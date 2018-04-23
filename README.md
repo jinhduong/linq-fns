@@ -52,8 +52,8 @@ main();
 - [x] join
 - [x] leftJoin
 - [ ] groupJoin
-- [ ] orderBy
-- [ ] orderByDescending
+- [x] orderBy
+- [x] orderByDescending
 - [ ] thenBy
 - [ ] thenByDescending
 - [x] take
@@ -67,12 +67,12 @@ main();
 - [ ] union
 - [ ] intersect
 - [ ] except
-- [x] first : `Promise`
-- [x] firstOrDefault : `Promise`
-- [x] last : `Promise`
-- [x] lastOrDefault : `Promise`
-- [ ] single
-- [ ] singleOrDefault
+- [x] first : `Promise<T>`
+- [x] firstOrDefault : `Promise<T | null>`
+- [x] last : `Promise<T>`
+- [x] lastOrDefault : `Promise<T | null>`
+- [x] single
+- [x] singleOrDefault
 - [ ] elementAt
 - [ ] elementAtOrDefault
 - [ ] orderByDescending
@@ -80,16 +80,16 @@ main();
 - [ ] contains
 - [ ] reserve
 - [ ] sequenceEqual
-- [ ] any
+- [x] any : `Promise<boolean>`
 - [ ] all
-- [x] count : `Promise`
+- [x] count : `Promise<number>`
 - [ ] longCount
-- [ ] min
-- [ ] max
-- [ ] sum
-- [ ] average
+- [x] min : `Promise<number>`
+- [x] max : `Promise<number>`
+- [x] sum : `Promise<number>`
+- [x] average
 - [ ] aggregate
-- [x] toList : `Promise`
+- [x] toList : `Promise<T>`
 
 
 ### License
