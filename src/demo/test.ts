@@ -32,7 +32,15 @@ async function main() {
     let query = queryable
         .from(promiseApi)
         .join(staticLoopkup, (x, y) => x.nationId == y.id)
-        .orderBy(x => x.x.name);
+        .select((o) => {
+            return {
+                playerName: o.x.name,
+                overall: o.x.overall,
+                nation: o.y.name
+            };
+        })
+        .orderBy(x => x.playerName);
+
 
     const data = await query.toList();
     console.log(data);
