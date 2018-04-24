@@ -2,7 +2,7 @@
     "compilerOptions": {
         "target": "es5",
         "sourceMap": true,
-        "outDir": "./dist/out-tsc",
+        "outDir": "./dist",
         "moduleResolution": "node",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,

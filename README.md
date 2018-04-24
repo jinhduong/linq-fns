@@ -93,13 +93,12 @@ main();
 - [ ] elementAtOrDefault
 - [ ] orderByDescending
 - [ ] defaultIfEmpty
-- [ ] contains
+- [x] contains
 - [ ] reserve
 - [ ] sequenceEqual
 - [x] any : `Promise<boolean>`
 - [ ] all
 - [x] count : `Promise<number>`
-- [ ] longCount
 - [x] min : `Promise<number>`
 - [x] max : `Promise<number>`
 - [x] sum : `Promise<number>`

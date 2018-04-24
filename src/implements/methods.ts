@@ -22,10 +22,17 @@ import { AvarageClause } from "../methods/average";
 import { OrderByClause } from "../methods/orderBy";
 import { OrderByDescendingClause } from "../methods/orderByDescending";
 import { GroupByClause } from "../methods/groupBy";
+import { ContainsClause } from "../methods/contains";
+import { GroupJoinClause } from "../methods/groupJoin";
 
 export class IteratorMethods<T> implements Methods<T> {
 
-
+    groupJoin<S>(source: S[],
+        joinIterator: (aEntity: T, bEntity: S) => boolean,
+        groupIterator: (entity: { x: T; y: S; }) => any): Methods<{ key: any; items: T[]; }> {
+        this._iteratorCollection.push(new GroupJoinClause(source, joinIterator, groupIterator));
+        return this as any;
+    }
     // Contains all iterators
     _iteratorCollection: Array<IIterator<T>> = [];
 
@@ -193,6 +200,12 @@ export class IteratorMethods<T> implements Methods<T> {
     any<T>(iterator: (entity: T) => boolean): Promise<boolean> {
         return this.toList().then((data: T[]) => {
             return new AnyClause(iterator).execute(data);
+        });
+    }
+
+    contains(entity: T): Promise<boolean> {
+        return this.toList().then((data: T[]) => {
+            return new ContainsClause(entity).execute(data);
         });
     }
 
