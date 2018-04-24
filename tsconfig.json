@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
         "target": "es5",
+        "importHelpers": true,
         "sourceMap": true,
         "outDir": "./dist",
         "moduleResolution": "node",
