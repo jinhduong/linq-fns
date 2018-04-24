@@ -5,8 +5,10 @@
         "sourceMap": true,
         "outDir": "./dist",
         "moduleResolution": "node",
+        "module": "amd",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
+        "outFile": "dist/eslinq.js",
         "typeRoots": [
             "node_modules/@types"
         ],
@@ -14,5 +16,8 @@
             "es2017",
             "dom"
         ]
-    }
+    },
+    "files": [
+        "./src/index.ts"
+    ]
 }
