@@ -1,7 +1,5 @@
 import { Queryable } from "../implements/queryable";
 
-const queryable = new Queryable<{ name, nationId, overall, skills }>();
-
 let promiseApi = new Promise((resolve, reject) => {
     // skills: attack, stamia, speed, shoot
     setTimeout(() => {
@@ -16,34 +14,40 @@ let promiseApi = new Promise((resolve, reject) => {
     }, 1000);
 })
 
-let nations = [
-    { id: 1, name: 'Portugal', areaId: 1 },
-    { id: 2, name: 'Argentina', areaId: 2 },
-    { id: 3, name: 'France', areaId: 1 },
-    { id: 4, name: 'Egypt', areaId: 3 }
-]
+let nations: Promise<{ id, name, areaId }[]> = new Promise(resolve => {
+    setTimeout(() => {
+        resolve([
+            { id: 1, name: 'Portugal', areaId: 1 },
+            { id: 2, name: 'Argentina', areaId: 2 },
+            { id: 3, name: 'France', areaId: 1 },
+            { id: 4, name: 'Egypt', areaId: 3 }
+        ]);
+    }, 1000);
+})
 
-let continents = [
-    { id: 1, areaName: 'Euro' },
-    { id: 2, areaName: 'South America' },
-]
+let continents = new Promise<{ id, areaName }[]>(resolve => {
+    setTimeout(() => {
+        resolve([
+            { id: 1, areaName: 'Euro' },
+            { id: 2, areaName: 'South America' },
+        ]);
+    }, 1000);
+})
+
 
 function main() {
     // Just query not execute query
     console.time('querytime');
-    let query = queryable
-        .from(promiseApi)
-        .groupJoin(nations, (x, y) => x.nationId === y.id, x => x.y.name)
-        .select(x => {
-            return {
-                area: x.key,
-                players: new Queryable().from(x.items).select((pl: { x, y }) => {
-                    return {
-                        playerName: pl.x.name
-                    }
-                }).toList()
-            }
-        })
+    let query =
+        Queryable
+            .from(nations)
+            .join(continents, (x, y) => x.areaId === y.id)
+            .select(o => {
+                return {
+                    nation: o.x.name,
+                    area: o.y.areaName
+                }
+            });
 
     console.timeEnd('querytime');
 

@@ -1,7 +1,8 @@
 import { IIterator } from "../intefaces/iterator.interface";
 import { SelectClause } from "./select";
+import { BaseIterator } from "../implements/base.iterator";
 
-export class SelectManyClause<T> implements IIterator<T> {
+export class SelectManyClause<T> extends BaseIterator<T> implements IIterator<T> {
 
     _iterator: (item: T, index?: number) => any;
 
@@ -23,6 +24,7 @@ export class SelectManyClause<T> implements IIterator<T> {
     }
 
     constructor(func: (item: T, index?: number) => any) {
+        super();
         this._iterator = func;
     }
 }

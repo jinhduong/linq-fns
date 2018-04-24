@@ -37,11 +37,11 @@ export class IteratorMethods<T> implements Methods<T> {
     _iteratorCollection: Array<IIterator<T>> = [];
 
     // Contains initial source
-    _source: any[] | Promise<any> | T[] | Promise<T> = [];
+    _source: T[] | Promise<T[]>;
 
     _data: any[];
 
-    constructor(iteratorCollection: Array<IIterator<T>>, source: any[] | Promise<any> | T[] | Promise<T>) {
+    constructor(iteratorCollection: Array<IIterator<T>>, source: T[] | Promise<T[]>) {
         this._iteratorCollection = iteratorCollection;
         this._source = source;
     }
@@ -87,26 +87,7 @@ export class IteratorMethods<T> implements Methods<T> {
     }
 
     toList<S>(): Promise<S[]> {
-
-        // From cache
-        if (this._data) {
-            let _result = this.runIterators(this._data);
-            return Promise.resolve(_result as S[]);
-        }
-        // From promise
-        else if (Utils.isPromise(this._source)) {
-            return (this._source as Promise<T[]>).then(data => {
-                let _result = this.runIterators(data);
-                this._data = data;
-                return _result as S[];
-            });
-        }
-        // From static data
-        else if (this._source) {
-            let _result = this.runIterators(this._source as T[]);
-            return Promise.resolve(_result as S[]);
-        }
-        return null;
+        return this.runIterators() as any;
     }
 
     first(iterator?: (entity: T) => boolean): Promise<T> {
@@ -209,16 +190,55 @@ export class IteratorMethods<T> implements Methods<T> {
         });
     }
 
-    // Private funstions
+    // Private functions
 
-    private runIterators(syncSource: T[]) {
+    private runIterators(): Promise<T[]> {
 
-        let _result = Object.assign([], syncSource);
+        let _result: T[] = [];
+        let _nextSources = {};
+        let _promises = [];
 
-        this._iteratorCollection.forEach((ite: IIterator<T>) => {
-            _result = ite.execute(_result) as T[];
+        for (let i = 0, li = this._iteratorCollection.length; i < li; i++) {
+
+            let _iterator = this._iteratorCollection[i];
+
+            if (!_iterator.hasSource()) continue;
+
+            if (Utils.isPromise(_iterator.nextSource))
+                _promises.push(_iterator.nextSource);
+            else
+                _promises.push(Promise.resolve(_iterator.nextSource));
+        }
+
+        if (Utils.isPromise(this._source))
+            _promises.unshift(this._source);
+        else
+            _promises.unshift(Promise.resolve(this._source));
+
+        return new Promise(resolve => {
+            Promise.all(_promises).then((responseDatas: any[]) => {
+                let _index = 0;
+
+                // Set from method's source
+                _result = responseDatas[0];
+
+                for (let i = 0, li = this._iteratorCollection.length; i < li; i++) {
+
+                    let _iterator = this._iteratorCollection[i];
+
+                    if (_iterator.hasSource()) {
+                        _iterator.replaceBySyncSource(responseDatas[_index + 1]);
+                        _index += 1;
+                    }
+                }
+
+                this._iteratorCollection.forEach((ite: IIterator<T>) => {
+                    _result = ite.execute(_result) as T[];
+                });
+
+                resolve(_result);
+
+            });
         });
-
-        return _result;
     }
 }

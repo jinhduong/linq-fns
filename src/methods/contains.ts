@@ -1,6 +1,7 @@
 import { IIterator } from "../intefaces/iterator.interface";
+import { BaseIterator } from "../implements/base.iterator";
 
-export class ContainsClause<T> implements IIterator<T> {
+export class ContainsClause<T> extends BaseIterator<T> implements IIterator<T> {
 
     _entity: T;
 
@@ -20,6 +21,7 @@ export class ContainsClause<T> implements IIterator<T> {
     }
 
     constructor(entity: T) {
+        super();
         this._entity = entity;
     }
 }

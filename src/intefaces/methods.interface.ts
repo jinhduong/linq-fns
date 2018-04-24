@@ -1,4 +1,5 @@
 export interface Methods<T> {
+
     // Query methods
     where(iterator: (entity: T) => boolean): Methods<T>;
     select<S>(iterator: (entity: T) => S): Methods<S>;
@@ -16,6 +17,15 @@ export interface Methods<T> {
 
     // Execute methods
     toList<S extends T>(): Promise<S[]>;
+
+    sum<S>(iterator: (entity: T) => S): Promise<number>;
+    min<S>(iterator: (entity: T) => S): Promise<number>;
+    max<S>(iterator: (entity: T) => S): Promise<number>;
+    avarage<S>(iterator: (entity: T) => S): Promise<number>;
+    any<T>(iterator: (entity: T) => boolean): Promise<boolean>;
+    contains(entity: T): Promise<boolean>;
+
+    // Methods with optional iterator
     first(iterator?: (entity: T) => boolean): Promise<T>;
     firstOrDefault(iterator?: (entity: T) => boolean): Promise<T>;
     last(iterator?: (entity: T) => boolean): Promise<T>;
@@ -23,10 +33,5 @@ export interface Methods<T> {
     single(iterator?: (entity: T) => boolean): Promise<T>;
     singleOrDefault(iterator?: (entity: T) => boolean): Promise<T>;
     count(iterator?: (entity: T) => boolean): Promise<number>;
-    sum<S>(iterator: (entity: T) => S): Promise<number>;
-    min<S>(iterator: (entity: T) => S): Promise<number>;
-    max<S>(iterator: (entity: T) => S): Promise<number>;
-    avarage<S>(iterator: (entity: T) => S): Promise<number>;
-    any<T>(iterator: (entity: T) => boolean): Promise<boolean>;
-    contains(entity: T): Promise<boolean>;
+    
 }

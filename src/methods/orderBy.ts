@@ -1,7 +1,8 @@
 import { IIterator } from "../intefaces/iterator.interface";
 import { SelectClause } from "./select";
+import { BaseIterator } from "../implements/base.iterator";
 
-export class OrderByClause<T> implements IIterator<T> {
+export class OrderByClause<T> extends BaseIterator<T> implements IIterator<T> {
 
     _iterator: (item: T) => any;
 
@@ -40,6 +41,7 @@ export class OrderByClause<T> implements IIterator<T> {
     }
 
     constructor(func: (item: T) => any) {
+        super();
         this._iterator = func;
     }
 }

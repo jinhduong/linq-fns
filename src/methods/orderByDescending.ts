@@ -1,7 +1,8 @@
 import { IIterator } from "../intefaces/iterator.interface";
 import { OrderByClause } from "./orderBy";
+import { BaseIterator } from "../implements/base.iterator";
 
-export class OrderByDescendingClause<T> implements IIterator<T> {
+export class OrderByDescendingClause<T> extends BaseIterator<T> implements IIterator<T> {
 
     _iterator: (item: T) => any;
 
@@ -15,6 +16,7 @@ export class OrderByDescendingClause<T> implements IIterator<T> {
     }
 
     constructor(func: (item: T) => any) {
+        super();
         this._iterator = func;
     }
 }

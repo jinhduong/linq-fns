@@ -1,6 +1,7 @@
 import { IIterator } from "../intefaces/iterator.interface";
+import { BaseIterator } from "../implements/base.iterator";
 
-export class CountClause<T> implements IIterator<T> {
+export class CountClause<T> extends BaseIterator<T> implements IIterator<T> {
 
     _iterator: (item: T) => boolean;
 
@@ -14,6 +15,7 @@ export class CountClause<T> implements IIterator<T> {
     }
 
     constructor(func?: (item: T) => boolean) {
+        super();
         this._iterator = func;
     }
 }

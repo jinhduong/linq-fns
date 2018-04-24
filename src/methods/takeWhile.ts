@@ -1,7 +1,8 @@
 import { IIterator } from "../intefaces/iterator.interface";
 import { TakeClause } from "./take";
+import { BaseIterator } from "../implements/base.iterator";
 
-export class TakeWhileClause<T> implements IIterator<T> {
+export class TakeWhileClause<T> extends BaseIterator<T> implements IIterator<T> {
 
     _iterator: (item: T) => boolean;
 
@@ -19,6 +20,7 @@ export class TakeWhileClause<T> implements IIterator<T> {
     }
 
     constructor(func: (item: T) => boolean) {
+        super();
         this._iterator = func;
     }
 }
