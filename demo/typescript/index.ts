@@ -40,28 +40,37 @@ let continents = new Promise<{ id, areaName }[]>(resolve => {
 function main() {
     let query = Queryable
         .from(players)
-        .where(x => x.overall > 85);
-
-    let query1 = query.clone()
-        .join(nations, (x, y) => x.nationId === y.id)
-        .select(o => {
+        .where(x => x.overall > 85)
+        .select(x => {
             return {
-                playerName: o.x.name,
-                nation: o.y.name
+                name: x.name,
+                stars: (() => { x.overall > 90 ? 5 : 4 })(),
+                realOverall: Queryable.fromSync(x.skills).avarage(),
+                nationId: x.nationId
+            }
+        })
+        .join(nations, (x, y) => x.nationId == y.id)
+        .leftJoin(continents, (plNation, con) => plNation.y.areaId == con.id)
+        .select(x => {
+            return {
+                name: x.x.name,
+                stars: x.x.stars,
+                realOverall: x.x.realOverall,
+                nation: x.y.name,
+                area: x.areaName
+            }
+        })
+        .groupBy(x => x.area)
+        .select(x => {
+            return {
+                area: x.key,
+                avg: (Queryable.fromSync(x.items).avarage(x => x.realOverall))
             }
         });
 
-    let query2 = query.clone()
-        .select(o => {
-            return {
-                name: o.name,
-                realOverall: Queryable.fromSync(o.skills).avarage()
-            }
-        }).orderByDescending(x => x.realOverall);
-
-    query.toList().then(data => console.table(data));
-    query1.toList().then(data => console.table(data));
-    query2.toList().then(data => console.table(data));
+    query.toList().then(data => {
+        console.table(data)
+    });
 }
 
 main();

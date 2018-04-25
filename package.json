@@ -4,7 +4,8 @@
   "description": "LINQ for Javascript, written by TypeScript",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -r ts-node/register test/*.ts"
+    "test": "mocha -r ts-node/register test/*.ts",
+    "demo": "tsc --sourceMap demo/typescript/index.ts"
   },
   "repository": {
     "type": "git",

@@ -13,7 +13,7 @@ export class SumClause<T> extends BaseIterator<T> implements IIterator<T> {
 
         if (!_result) return 0;
 
-        if (!Number.isNaN(_result[0])) throw new Error("Sum operator need type of number");
+        if (Number.isNaN(_result[0])) throw new Error("Sum operator need type of number");
 
         return _result.reduce((a, b) => a + b, 0);
     }

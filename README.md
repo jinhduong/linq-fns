@@ -3,6 +3,7 @@
 - Provide `IQueryable<T>`, it's reusable, also variable and use `iterator list` for holding query and execute.
 - Contains almost the original .NET and some extends methods.
 - Support `Promise` like a input source.
+- All `APIs` like a Javascript native methods so easily, simply implementation.
 
 ### Basic example
 ```ts
