@@ -6,6 +6,7 @@ import {
     SumClause, AvarageClause, MinClause, MaxClause, SingleClause, TakeClause, SkipWhileClause,
     SkipClause, TakeWhileClause, AnyClause, ContainsClause
 } from "../methods";
+import { Queryable } from './queryable';
 
 export class IteratorMethods<T> implements IMethods<T> {
 
@@ -20,6 +21,11 @@ export class IteratorMethods<T> implements IMethods<T> {
     constructor(iteratorCollection: Array<IIterator<T>>, source: T[] | Promise<T[]>) {
         this._iteratorCollection = iteratorCollection;
         this._source = source;
+    }
+
+    clone(): IMethods<T> {
+        const _cloneCollection = Object.assign([], this._iteratorCollection);
+        return new IteratorMethods(_cloneCollection,this._source);
     }
 
     where(iterator: (entity: T) => boolean): IMethods<T> {
@@ -47,14 +53,14 @@ export class IteratorMethods<T> implements IMethods<T> {
         return this as any;
     }
 
-    orderBy(iterator: (entity: T) => T): IMethods<T> {
+    orderBy(iterator: (entity: T) => void): IMethods<T> {
         this._iteratorCollection.push(new OrderByClause(iterator));
-        return this;
+        return this as any;
     }
 
-    orderByDescending(iterator: (entity: T) => T): IMethods<T> {
+    orderByDescending(iterator: (entity: T) => void): IMethods<T> {
         this._iteratorCollection.push(new OrderByDescendingClause(iterator));
-        return this;
+        return this as any;
     }
 
     groupBy(iterator: (entity: T) => any): IMethods<{ key: any; items: T[]; }> {

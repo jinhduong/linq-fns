@@ -39,19 +39,29 @@ let continents = new Promise<{ id, areaName }[]>(resolve => {
 
 function main() {
     let query = Queryable
-        .from(nations)
-        .join(continents, (x, y) => x.areaId === y.id)
-        .groupBy(o => o.y.areaName)
-        .select(x => {
-            return {
-                area: x.key,
-                total: Queryable.fromSync(x.items).count()
-            }
-        })
+        .from(players)
+        .where(x => x.overall > 85);
 
-    const data = query.toList().then(data => {
-        console.table(data);
-    });
+    let query1 = query.clone()
+        .join(nations, (x, y) => x.nationId === y.id)
+        .select(o => {
+            return {
+                playerName: o.x.name,
+                nation: o.y.name
+            }
+        });
+
+    let query2 = query.clone()
+        .select(o => {
+            return {
+                name: o.name,
+                realOverall: Queryable.fromSync(o.skills).avarage()
+            }
+        }).orderByDescending(x => x.realOverall);
+
+    query.toList().then(data => console.table(data));
+    query1.toList().then(data => console.table(data));
+    query2.toList().then(data => console.table(data));
 }
 
 main();

@@ -1,4 +1,6 @@
 export interface IMethods<T> {
+    // Extend methods
+    clone(): IMethods<T>;
 
     // Query methods
     where(iterator: (entity: T) => boolean): IMethods<T>;
@@ -8,8 +10,8 @@ export interface IMethods<T> {
     skip(value: number): IMethods<T>;
     skipWhile(iterator: (entity: T) => boolean): IMethods<T>;
     takeWhile(iterator: (entity: T) => boolean): IMethods<T>;
-    orderBy(iterator: (entity: T) => T): IMethods<T>;
-    orderByDescending(iterator: (entity: T) => T): IMethods<T>;
+    orderBy(iterator: (entity: T) => void): IMethods<T>;
+    orderByDescending(iterator: (entity: T) => void): IMethods<T>;
     join<S>(source: S[] | Promise<S[]>, iterator: (aEntity: T, bEntity: S) => boolean): IMethods<{ x: T, y: S }>;
     leftJoin<S, U extends T & S>(source: S[] | Promise<S[]>, iterator: (aEntity: T, bEntity: S) => boolean): IMethods<U>;
     groupBy(iterator: (entity: T) => any): IMethods<{ key: any, items: T[] }>;

@@ -10,6 +10,7 @@ export class LastClause<T> extends BaseIterator<T> implements IIterator<T> {
             return source[source.length];
         }
         else {
+            if (!this._iterator) return source[source.length - 1];
             return (source as T[]).filter((x) => {
                 return this._iterator(x);
             })[source.length - 1];
