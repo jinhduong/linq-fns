@@ -1,13 +1,15 @@
-import { Utils } from "../utils/object";
-import { IQueryable } from "../intefaces/iqueryable.interface";
-import { IIterator } from "../intefaces/iterator.interface";
-import { IteratorMethods } from "./methods";
-import { Methods } from "../intefaces/methods.interface";
+import { IMethods, IIterator } from '../intefaces';
+import { SyncIteratorMethods, IteratorMethods } from './index';
 
-export class Queryable<T> implements IQueryable<T> {
-    _iteratorCollection: Array<IIterator<T>> = [];
+export class Queryable {
 
-    from(source: Promise<any> | T[] | Promise<T> | any[]): Methods<T> {
-        return new IteratorMethods(this._iteratorCollection, source);
+    private static _iteratorCollection: Array<IIterator<any>> = [];
+
+    static from<T>(source: T[] | Promise<T[]>): IMethods<T> {
+        return new IteratorMethods([], source);
+    }
+
+    static fromSync<T>(source: T[]): IMethods<T> {
+        return new SyncIteratorMethods([], source);
     }
 }

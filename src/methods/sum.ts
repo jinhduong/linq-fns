@@ -1,7 +1,8 @@
 import { IIterator } from "../intefaces/iterator.interface";
 import { SelectClause } from "./select";
+import { BaseIterator } from "../implements/baseIterator";
 
-export class SumClause<T> implements IIterator<T> {
+export class SumClause<T> extends BaseIterator<T> implements IIterator<T> {
 
     _iterator: (item: T) => any;
 
@@ -18,6 +19,7 @@ export class SumClause<T> implements IIterator<T> {
     }
 
     constructor(func?: (item: T) => any) {
+        super();
         this._iterator = func;
     }
 }

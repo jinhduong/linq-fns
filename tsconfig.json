@@ -1,11 +1,14 @@
 {
     "compilerOptions": {
         "target": "es5",
+        "importHelpers": true,
         "sourceMap": true,
-        "outDir": "./dist/out-tsc",
+        "outDir": "./dist",
         "moduleResolution": "node",
+        // "module": "amd",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
+        // "outFile": "dist/eslinq.js",
         "typeRoots": [
             "node_modules/@types"
         ],

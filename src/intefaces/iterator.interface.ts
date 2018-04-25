@@ -1,3 +1,12 @@
 export interface IIterator<T> {
-    execute(source: Array<T> | Array<any>): Array<T> | T | any;
+
+    // Contains the source if this iterator need itself 
+    nextSource?: any[] | Promise<any[]>;
+
+    replaceBySyncSource?(syncSource: T[]);
+
+    hasSource(): boolean;
+
+    // Call this clause
+    execute(source: T[]): any;
 }

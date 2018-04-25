@@ -1,20 +1,22 @@
 import { IIterator } from "../intefaces/iterator.interface";
+import { BaseIterator } from "../implements/baseIterator";
 
-export class LeftJoinClause<T, S> implements IIterator<T> {
+export class LeftJoinClause<T, S> extends BaseIterator<T> implements IIterator<T> {
 
     _iterator: (item1: T, item2: S) => boolean;
-    _anotherSource: S[] | Promise<S[]> = [];
+
+    nextSource: any[] | Promise<any[]>;
 
     execute(source: any[] | T[]): T[] | any[] {
         if (source) {
             let _result = [];
             for (let i = 0, li = source.length; i < li; i++) {
                 let _flag = false;
-                for (let j = 0, lj = (this._anotherSource as S[]).length; j < lj; j++) {
-                    if (this._iterator(source[i], this._anotherSource[j])) {
+                for (let j = 0, lj = (this.nextSource as S[]).length; j < lj; j++) {
+                    if (this._iterator(source[i], this.nextSource[j])) {
                         _result.push(Object.assign({}
                             , source[i]
-                            , this._anotherSource[j]))
+                            , this.nextSource[j]))
                         _flag = true; break;
                     }
                 }
@@ -28,7 +30,8 @@ export class LeftJoinClause<T, S> implements IIterator<T> {
     }
 
     constructor(anotherSource: S[] | Promise<S[]>, func: (item1: T, item2: S) => boolean) {
+        super();
         this._iterator = func;
-        this._anotherSource = anotherSource;
+        this.nextSource = anotherSource;
     }
 }

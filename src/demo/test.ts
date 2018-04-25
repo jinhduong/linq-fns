@@ -1,49 +1,56 @@
 import { Queryable } from "../implements/queryable";
 
-const queryable = new Queryable<{ name, nationId, overall, skills }>();
-
-let promiseApi = new Promise((resolve, reject) => {
+let players = new Promise((resolve, reject) => {
     // skills: attack, stamia, speed, shoot
+    console.log('get players...');
     setTimeout(() => {
-        console.log('...get data');
         resolve([
             { name: 'Ronaldo', overall: 96, nationId: 1, skills: [96, 85, 87, 91] },
             { name: 'Messi', overall: 98, nationId: 2, skills: [97, 85, 91, 93] },
             { name: 'Mbappe', overall: 86, nationId: 3, skills: [89, 81, 95, 83] },
+            { name: 'Matial', overall: 81, nationId: 3, skills: [81, 80, 89, 81] },
             { name: 'Salah', overall: 89, nationId: 4, skills: [88, 82, 97, 86] }
         ]);
     }, 1000);
 })
 
-let nations = [
-    { id: 1, name: 'Portugal', areaId: 1 },
-    { id: 2, name: 'Argentina', areaId: 2 },
-    { id: 3, name: 'France', areaId: 1 },
-    { id: 4, name: 'Egypt', areaId: 3 }
-]
+let nations: Promise<{ id, name, areaId }[]> = new Promise(resolve => {
+    console.log('get nations...');
+    setTimeout(() => {
+        resolve([
+            { id: 1, name: 'Portugal', areaId: 1 },
+            { id: 2, name: 'Argentina', areaId: 2 },
+            { id: 3, name: 'France', areaId: 1 },
+            { id: 4, name: 'Egypt', areaId: 3 }
+        ]);
+    }, 2000);
+})
 
-let continents = [
-    { id: 1, areaName: 'Euro' },
-    { id: 2, areaName: 'South America' },
-]
+let continents = new Promise<{ id, areaName }[]>(resolve => {
+    console.log('get continents...');
+    setTimeout(() => {
+        resolve([
+            { id: 1, areaName: 'Euro' },
+            { id: 2, areaName: 'South America' },
+        ]);
+    }, 2300);
+})
+
 
 function main() {
     // Just query not execute query
     console.time('querytime');
-    let query = queryable
-        .from(promiseApi)
-        .join(nations, (pl, na) => pl.nationId === na.id)
-        .leftJoin(continents, (plNation, co) => plNation.y.areaId === co.id)
-        .select(o => {
-            return {
-                playerName: o.x.name,
-                overall: o.x.overall,
-                nation: o.y.name,
-                area: o.areaName
-            }
-        })
-        .groupBy(x => x.area)
-        .orderByDescending(x => x.key);
+    let query = Queryable
+            .from(nations)
+            .join(continents, (x, y) => x.areaId === y.id)
+            .groupBy(o => o.y.areaName)
+            .select(x => {
+                return {
+                    area: x.key,
+                    total: Queryable.fromSync(x.items).count()
+                }
+            })
+
 
     console.timeEnd('querytime');
 

@@ -1,6 +1,7 @@
 import { IIterator } from "../intefaces/iterator.interface";
+import { BaseIterator } from "../implements/baseIterator";
 
-export class TakeClause<T> implements IIterator<T> {
+export class TakeClause<T> extends BaseIterator<T> implements IIterator<T> {
 
     _iterator: number;
 
@@ -12,6 +13,7 @@ export class TakeClause<T> implements IIterator<T> {
     }
 
     constructor(skip: number) {
+        super();
         this._iterator = skip;
     }
 }
