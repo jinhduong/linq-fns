@@ -106,7 +106,7 @@ asyncData.then(data => {
 });
 ```
 
-> **More**: at `from` method, all input sources at `from`, `join`, `leftJoin` methods,... will be converted to `Promise` and use `Promise.all` to execute and then use `Iterator collection` to query data and once faced `excuting` methods like as `toList()`, `first()` it will return data which be inside a Promise.
+> **> More**: at `from` method, all input sources at `from, join, leftJoin` methods,... will be converted to **Promise** and use **Promise.all** to **execute** and then use **Iterator collection** to query data and once faced **excuting methods** like as `toList(), first()` it will return data which be inside a Promise.
 
 
 ### Process
