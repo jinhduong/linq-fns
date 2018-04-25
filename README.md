@@ -84,7 +84,7 @@ asyncData.then(num => {
  ```
 
 - `.fromSync` => `any`: 
-It's often use inside sub-query whese are after all data already retrieve successfully or you make sure the inpurt source is sync data like as `Array`.
+It's often use inside sub-query which are after all data already retrieved successfully or you make sure the input source is sync data like as `Array`.
 ``` ts
 let query = Queryable
             .from(nations)
@@ -96,7 +96,7 @@ let query = Queryable
                     total: Queryable.fromSync(x.items).count() // Here will return number, not Promise<number>
                 }
             })
-const asyncData = query.count() // Will return Promise<{area:string, total:number}>
+const asyncData = query.toList() // Will return Promise<{area:string, total:number}>
 asyncData.then(data => {
     console.log(data);
     // [
