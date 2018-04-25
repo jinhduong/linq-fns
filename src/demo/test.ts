@@ -1,6 +1,6 @@
 import { Queryable } from "../implements/queryable";
 
-let promiseApi = new Promise((resolve, reject) => {
+let players = new Promise((resolve, reject) => {
     // skills: attack, stamia, speed, shoot
     console.log('get players...');
     setTimeout(() => {
@@ -40,16 +40,14 @@ let continents = new Promise<{ id, areaName }[]>(resolve => {
 function main() {
     // Just query not execute query
     console.time('querytime');
-    let query =
-        Queryable
+    let query = Queryable
             .from(nations)
             .join(continents, (x, y) => x.areaId === y.id)
             .groupBy(o => o.y.areaName)
             .select(x => {
-                let _tmp = {};
                 return {
                     area: x.key,
-                    total: Queryable.from(x.items).count()
+                    total: Queryable.fromSync(x.items).count()
                 }
             })
 

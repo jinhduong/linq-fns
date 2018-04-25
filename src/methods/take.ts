@@ -1,5 +1,5 @@
 import { IIterator } from "../intefaces/iterator.interface";
-import { BaseIterator } from "../implements/base.iterator";
+import { BaseIterator } from "../implements/baseIterator";
 
 export class TakeClause<T> extends BaseIterator<T> implements IIterator<T> {
 

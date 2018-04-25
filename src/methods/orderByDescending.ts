@@ -1,6 +1,6 @@
 import { IIterator } from "../intefaces/iterator.interface";
 import { OrderByClause } from "./orderBy";
-import { BaseIterator } from "../implements/base.iterator";
+import { BaseIterator } from "../implements/baseIterator";
 
 export class OrderByDescendingClause<T> extends BaseIterator<T> implements IIterator<T> {
 

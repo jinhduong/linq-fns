@@ -1,19 +1,19 @@
-export interface Methods<T> {
+export interface IMethods<T> {
 
     // Query methods
-    where(iterator: (entity: T) => boolean): Methods<T>;
-    select<S>(iterator: (entity: T) => S): Methods<S>;
-    selectMany<S>(iterator: (entity: T, index?: number) => S): Methods<S | { index: number, value: S }>;
-    take(value: number): Methods<T>;
-    skip(value: number): Methods<T>;
-    skipWhile(iterator: (entity: T) => boolean): Methods<T>;
-    takeWhile(iterator: (entity: T) => boolean): Methods<T>;
-    orderBy(iterator: (entity: T) => T): Methods<T>;
-    orderByDescending(iterator: (entity: T) => T): Methods<T>;
-    join<S>(source: S[] | Promise<S[]>, iterator: (aEntity: T, bEntity: S) => boolean): Methods<{ x: T, y: S }>;
-    leftJoin<S, U extends T & S>(source: S[] | Promise<S[]>, iterator: (aEntity: T, bEntity: S) => boolean): Methods<U>;
-    groupBy(iterator: (entity: T) => any): Methods<{ key: any, items: T[] }>;
-    groupJoin<S>(source: S[] | Promise<S[]>, joinIterator: (aEntity: T, bEntity: S) => boolean, groupIterator: (entity: { x: T, y: S }) => any): Methods<{ key: any, items: T[] }>;
+    where(iterator: (entity: T) => boolean): IMethods<T>;
+    select<S>(iterator: (entity: T) => S): IMethods<S>;
+    selectMany<S>(iterator: (entity: T, index?: number) => S): IMethods<S | { index: number, value: S }>;
+    take(value: number): IMethods<T>;
+    skip(value: number): IMethods<T>;
+    skipWhile(iterator: (entity: T) => boolean): IMethods<T>;
+    takeWhile(iterator: (entity: T) => boolean): IMethods<T>;
+    orderBy(iterator: (entity: T) => T): IMethods<T>;
+    orderByDescending(iterator: (entity: T) => T): IMethods<T>;
+    join<S>(source: S[] | Promise<S[]>, iterator: (aEntity: T, bEntity: S) => boolean): IMethods<{ x: T, y: S }>;
+    leftJoin<S, U extends T & S>(source: S[] | Promise<S[]>, iterator: (aEntity: T, bEntity: S) => boolean): IMethods<U>;
+    groupBy(iterator: (entity: T) => any): IMethods<{ key: any, items: T[] }>;
+    groupJoin<S>(source: S[] | Promise<S[]>, joinIterator: (aEntity: T, bEntity: S) => boolean, groupIterator: (entity: { x: T, y: S }) => any): IMethods<{ key: any, items: T[] }>;
 
     // Execute methods
     toList<S extends T>(): Promise<S[]>;
@@ -32,6 +32,5 @@ export interface Methods<T> {
     lastOrDefault(iterator?: (entity: T) => boolean): Promise<T>;
     single(iterator?: (entity: T) => boolean): Promise<T>;
     singleOrDefault(iterator?: (entity: T) => boolean): Promise<T>;
-    count(iterator?: (entity: T) => boolean): Promise<number>;
-    
+    count(iterator?: (entity: T) => boolean): Promise<number>; 
 }

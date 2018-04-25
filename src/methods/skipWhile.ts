@@ -1,6 +1,6 @@
 import { IIterator } from "../intefaces/iterator.interface";
 import { SkipClause } from "./skip";
-import { BaseIterator } from "../implements/base.iterator";
+import { BaseIterator } from "../implements/baseIterator";
 
 export class SkipWhileClause<T> extends BaseIterator<T> implements IIterator<T> {
 

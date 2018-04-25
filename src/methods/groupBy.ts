@@ -1,6 +1,6 @@
 import { IIterator } from "../intefaces/iterator.interface";
 import { SelectClause } from "./select";
-import { BaseIterator } from "../implements/base.iterator";
+import { BaseIterator } from "../implements/baseIterator";
 
 export class GroupByClause<T> extends BaseIterator<T> implements IIterator<T> {
 

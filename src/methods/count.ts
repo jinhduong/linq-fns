@@ -1,5 +1,5 @@
 import { IIterator } from "../intefaces/iterator.interface";
-import { BaseIterator } from "../implements/base.iterator";
+import { BaseIterator } from "../implements/baseIterator";
 
 export class CountClause<T> extends BaseIterator<T> implements IIterator<T> {
 
@@ -7,6 +7,7 @@ export class CountClause<T> extends BaseIterator<T> implements IIterator<T> {
 
     execute(source: any[] | T[]): T[] | T | any {
         if (!source) return source.length;
+        else if (!this._iterator) return source.length;
         else {
             return (source as T[]).filter((x) => {
                 return this._iterator(x);

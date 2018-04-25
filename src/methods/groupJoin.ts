@@ -2,7 +2,7 @@ import { IIterator } from "../intefaces/iterator.interface";
 import { SelectClause } from "./select";
 import { JoinClause } from "./join";
 import { GroupByClause } from "./groupBy";
-import { BaseIterator } from "../implements/base.iterator";
+import { BaseIterator } from "../implements/baseIterator";
 
 export class GroupJoinClause<T, S> extends BaseIterator<T> implements IIterator<T> {
 
