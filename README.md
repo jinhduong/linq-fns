@@ -4,6 +4,19 @@
 - Contains almost the original .NET and some extends methods.
 - Support `Promise` like a input source.
 
+## Documents
+- [eslinq](#---eslinq)
+    + [Basic example](#basic-example)
+    + [Sample data ⚽](#sample-data--)
+    + [Queryable](#queryable)
+      - [.from() => `Promise<any>`:](#from-------promise-any---)
+      - [.fromSync => `any`:](#fromsync-----any--)
+    + [IMethods](#imethods)
+      - [.clone() => IMethods:](#clone------imethods-)
+      - [.where(condition) => IMethod:](#where-condition-----imethod-)
+      - [.select(iterator) => IMethods](#select-iterator-----imethods)
+    + [Process](#process)
+
 ### Basic example
 ```ts
 let query = Queryable
