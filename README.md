@@ -113,62 +113,90 @@ asyncData.then(data => {
 Make new `IMethods` instance from a exists `Queryable`. New one will keep the `Iterator collection` and `source` but not affect to previous `Queryable`.
 It's useful when we make the common `Queryable` and then use it to many other places.
 ```ts
-    // Just where over > 85
-    let query = Queryable
+// Just where over > 85
+let query = Queryable
+    .from(players)
+    .where(x => x.overall > 85);
+
+// Continue from `query` and select player and nation 
+let query1 = query.clone()
+    .join(nations, (x, y) => x.nationId === y.id)
+    .select(o => {
+        return {
+            playerName: o.x.name,
+            nation: o.y.name
+        }
+    });
+
+// Continue from `query` and calculate real overall each players
+let query2 = query.clone()
+    .select(o => {
+        return {
+            name: o.name,
+            realOverall: Queryable.fromSync(o.skills).avarage()
+        }
+    }).orderByDescending(x => x.realOverall);
+
+
+query.toList().then(data => console.table(data));
+// name     overall  nationId  skills     
+// -------  -------  --------  -----------
+// Ronaldo  96       1         96,85,87,91
+// Messi    98       2         97,85,91,93
+// Mbappe   86       3         89,81,95,83
+// Salah    89       4         88,82,97,86
+
+query1.toList().then(data => console.table(data));
+// playerName  nation   
+// ----------  ---------
+// Ronaldo     Portugal 
+// Messi       Argentina
+// Mbappe      France   
+// Salah       Egypt 
+
+query2.toList().then(data => console.table(data));
+// name     realOverall
+// -------  -----------
+// Messi    91.5       
+// Ronaldo  89.75      
+// Salah    88.25      
+// Mbappe   87
+```
+
+#### .where(condition) => IMethod:
+```ts
+let query = Queryable
         .from(players)
         .where(x => x.overall > 85);
 
-    // Continue from `query` and select player and nation 
-    let query1 = query.clone()
-        .join(nations, (x, y) => x.nationId === y.id)
-        .select(o => {
-            return {
-                playerName: o.x.name,
-                nation: o.y.name
-            }
-        });
+query.toList().then(data => console.table(data));
+// name     overall  nationId  skills     
+// -------  -------  --------  -----------
+// Ronaldo  96       1         96,85,87,91
+// Messi    98       2         97,85,91,93
+// Mbappe   86       3         89,81,95,83
+// Salah    89       4         88,82,97,86
+```
 
-    // Continue from `query` and calculate real overall each players
-    let query2 = query.clone()
+#### .select(iterator) => IMethods
+```ts
+let query = Queryable
+        .from(players)
+        .where(x => x.overall > 85)
         .select(o => {
             return {
                 name: o.name,
                 realOverall: Queryable.fromSync(o.skills).avarage()
             }
-        }).orderByDescending(x => x.realOverall);
 
-    
-    query.toList().then(data => console.table(data));
-    // name     overall  nationId  skills     
-    // -------  -------  --------  -----------
-    // Ronaldo  96       1         96,85,87,91
-    // Messi    98       2         97,85,91,93
-    // Mbappe   86       3         89,81,95,83
-    // Salah    89       4         88,82,97,86
-
-    query1.toList().then(data => console.table(data));
-    // playerName  nation   
-    // ----------  ---------
-    // Ronaldo     Portugal 
-    // Messi       Argentina
-    // Mbappe      France   
-    // Salah       Egypt 
-
-    query2.toList().then(data => console.table(data));
-    // name     realOverall
-    // -------  -----------
-    // Messi    91.5       
-    // Ronaldo  89.75      
-    // Salah    88.25      
-    // Mbappe   87
+query.toList().then(data => console.table(data));
+// name     realOverall
+// -------  -----------
+// Messi    91.5       
+// Ronaldo  89.75      
+// Salah    88.25      
+// Mbappe   87
 ```
-
-
-
-
-
-
-
 
 ### Process
 - [x] from
