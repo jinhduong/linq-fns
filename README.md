@@ -16,7 +16,7 @@ let query = Queryable
                     total: Queryable.fromSync(x.items).count() // Here will return number, not Promise<number>
                 }
             })
-const asyncData = query.count() // Will return Promise<{area:string, total:number}>
+const asyncData = query.toList() // Will return Promise<{area:string, total:number}>
 asyncData.then(data => {
     console.log(data);
     // [

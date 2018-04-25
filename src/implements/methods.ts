@@ -75,25 +75,25 @@ export class IteratorMethods<T> implements IMethods<T> {
     }
 
     first(iterator?: (entity: T) => boolean): Promise<T> {
-        return this.toList().then((data: T[]) => {
+        return this.filterReturn(this.toList(), (data) => {
             return new FirstClause(iterator).execute(data) as T;
         });
     }
 
     firstOrDefault(iterator?: (entity: T) => boolean): Promise<T> {
-        return this.toList().then((data: T[]) => {
+        return this.filterReturn(this.toList(), (data) => {
             return (new FirstClause(iterator).execute(data) || null) as T;
         });
     }
 
     last(iterator?: (entity: T) => boolean): Promise<T> {
-        return this.toList().then((data: T[]) => {
+        return this.filterReturn(this.toList(), (data) => {
             return new LastClause(iterator).execute(data) as T;
         });
     }
 
     lastOrDefault(iterator?: (entity: T) => boolean): Promise<T> {
-        return this.toList().then((data: T[]) => {
+        return this.filterReturn(this.toList(), (data) => {
             return (new LastClause(iterator).execute(data) || null) as T;
         });
     }
@@ -106,31 +106,31 @@ export class IteratorMethods<T> implements IMethods<T> {
 
 
     sum<S>(iterator: (entity: T) => S): Promise<number> {
-        return this.toList().then((data: T[]) => {
+        return this.filterReturn(this.toList(), (data) => {
             return (new SumClause(iterator).execute(data) || null) as number;
         });
     }
 
     avarage<S>(iterator: (entity: T) => S): Promise<number> {
-        return this.toList().then((data: T[]) => {
+        return this.filterReturn(this.toList(), (data) => {
             return (new AvarageClause(iterator).execute(data) || 0) as number;
         });
     }
 
     min<S>(iterator: (entity: T) => S): Promise<number> {
-        return this.toList().then((data: T[]) => {
+        return this.filterReturn(this.toList(), (data) => {
             return (new MinClause(iterator).execute(data) || null) as number;
         });
     }
 
     max<S>(iterator: (entity: T) => S): Promise<number> {
-        return this.toList().then((data: T[]) => {
+        return this.filterReturn(this.toList(), (data) => {
             return (new MaxClause(iterator).execute(data) || null) as number;
         });
     }
 
     single(iterator?: (entity: T) => boolean): Promise<T> {
-        return this.toList().then((data: T[]) => {
+        return this.filterReturn(this.toList(), (data) => {
             if (!data) throw new Error("Single require source is not null");
             return new SingleClause(iterator).execute(data);
 
@@ -138,7 +138,7 @@ export class IteratorMethods<T> implements IMethods<T> {
     }
 
     singleOrDefault(iterator?: (entity: T) => boolean): Promise<T> {
-        return this.toList().then((data: T[]) => {
+        return this.filterReturn(this.toList(), (data) => {
             return new SingleClause(iterator).execute(data) || null;
         });
     }
@@ -164,13 +164,13 @@ export class IteratorMethods<T> implements IMethods<T> {
     }
 
     any<T>(iterator: (entity: T) => boolean): Promise<boolean> {
-        return this.toList().then((data: T[]) => {
+        return this.filterReturn(this.toList(), (data) => {
             return new AnyClause(iterator).execute(data);
         });
     }
 
     contains(entity: T): Promise<boolean> {
-        return this.toList().then((data: T[]) => {
+        return this.filterReturn(this.toList(), (data) => {
             return new ContainsClause(entity).execute(data);
         });
     }

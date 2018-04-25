@@ -21,7 +21,7 @@ export interface IMethods<T> {
     sum<S>(iterator: (entity: T) => S): Promise<number>;
     min<S>(iterator: (entity: T) => S): Promise<number>;
     max<S>(iterator: (entity: T) => S): Promise<number>;
-    avarage<S>(iterator: (entity: T) => S): Promise<number>;
+    avarage<S>(iterator?: (entity: T) => S): Promise<number>;
     any<T>(iterator: (entity: T) => boolean): Promise<boolean>;
     contains(entity: T): Promise<boolean>;
 

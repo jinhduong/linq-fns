@@ -1,6 +1,7 @@
 import { Queryable } from "../implements/queryable";
+const cTable = require('console.table');
 
-let players = new Promise((resolve, reject) => {
+let players = new Promise<{ name, overall, nationId, skills }[]>((resolve, reject) => {
     // skills: attack, stamia, speed, shoot
     console.log('get players...');
     setTimeout(() => {
@@ -36,28 +37,19 @@ let continents = new Promise<{ id, areaName }[]>(resolve => {
     }, 2300);
 })
 
-
 function main() {
-    // Just query not execute query
-    console.time('querytime');
     let query = Queryable
-            .from(nations)
-            .join(continents, (x, y) => x.areaId === y.id)
-            .groupBy(o => o.y.areaName)
-            .select(x => {
-                return {
-                    area: x.key,
-                    total: Queryable.fromSync(x.items).count()
-                }
-            })
+        .from(nations)
+        .join(continents, (x, y) => x.areaId === y.id)
+        .groupBy(o => o.y.areaName)
+        .select(x => {
+            return {
+                area: x.key,
+                total: Queryable.fromSync(x.items).count()
+            }
+        })
 
-
-    console.timeEnd('querytime');
-
-    console.time('executetime');
     const data = query.toList().then(data => {
-        console.timeEnd('executetime');
-        console.log(data);
         console.table(data);
     });
 }
