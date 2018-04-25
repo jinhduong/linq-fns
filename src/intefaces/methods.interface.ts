@@ -16,6 +16,8 @@ export interface IMethods<T> {
     leftJoin<S, U extends T & S>(source: S[] | Promise<S[]>, iterator: (aEntity: T, bEntity: S) => boolean): IMethods<U>;
     groupBy(iterator: (entity: T) => any): IMethods<{ key: any, items: T[] }>;
     groupJoin<S>(source: S[] | Promise<S[]>, joinIterator: (aEntity: T, bEntity: S) => boolean, groupIterator: (entity: { x: T, y: S }) => any): IMethods<{ key: any, items: T[] }>;
+    distinct(comparer?: (aEntity: T, bEntity: T) => boolean): IMethods<T>
+    concat(another: T[] | Promise<T[]>): IMethods<T>
 
     // Execute methods
     toList<S extends T>(): Promise<S[]>;
@@ -25,6 +27,7 @@ export interface IMethods<T> {
     max<S>(iterator: (entity: T) => S): Promise<number>;
     avarage<S>(iterator?: (entity: T) => S): Promise<number>;
     any<T>(iterator: (entity: T) => boolean): Promise<boolean>;
+    all<T>(iterator: (entity: T) => boolean): Promise<boolean>;
     contains(entity: T): Promise<boolean>;
 
     // Methods with optional iterator
@@ -34,5 +37,5 @@ export interface IMethods<T> {
     lastOrDefault(iterator?: (entity: T) => boolean): Promise<T>;
     single(iterator?: (entity: T) => boolean): Promise<T>;
     singleOrDefault(iterator?: (entity: T) => boolean): Promise<T>;
-    count(iterator?: (entity: T) => boolean): Promise<number>; 
+    count(iterator?: (entity: T) => boolean): Promise<number>;
 }

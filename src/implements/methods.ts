@@ -4,9 +4,11 @@ import {
     WhereClause, SelectClause, SelectManyClause, JoinClause, LeftJoinClause, OrderByClause,
     OrderByDescendingClause, GroupByClause, GroupJoinClause, FirstClause, LastClause, CountClause,
     SumClause, AvarageClause, MinClause, MaxClause, SingleClause, TakeClause, SkipWhileClause,
-    SkipClause, TakeWhileClause, AnyClause, ContainsClause
+    SkipClause, TakeWhileClause, AnyClause, ContainsClause, AllClause
 } from "../methods";
 import { Queryable } from './queryable';
+import { DistinctClause } from '../methods/distinct';
+import { ConcatClause } from '../methods/concat';
 
 export class IteratorMethods<T> implements IMethods<T> {
 
@@ -25,7 +27,7 @@ export class IteratorMethods<T> implements IMethods<T> {
 
     clone(): IMethods<T> {
         const _cloneCollection = Object.assign([], this._iteratorCollection);
-        return new IteratorMethods(_cloneCollection,this._source);
+        return new IteratorMethods(_cloneCollection, this._source);
     }
 
     where(iterator: (entity: T) => boolean): IMethods<T> {
@@ -73,6 +75,16 @@ export class IteratorMethods<T> implements IMethods<T> {
         groupIterator: (entity: { x: T; y: S; }) => any): IMethods<{ key: any; items: T[]; }> {
         this._iteratorCollection.push(new GroupJoinClause(source, joinIterator, groupIterator));
         return this as any;
+    }
+
+    distinct(comparer?: (aEntity: T, bEntity: T) => boolean): IMethods<T> {
+        this._iteratorCollection.push(new DistinctClause(comparer));
+        return this;
+    }
+
+    concat(another: T[] | Promise<T[]>): IMethods<T> {
+        this._iteratorCollection.push(new ConcatClause(another));
+        return this;
     }
 
     // Return S[] | Promise<S[]>
@@ -172,6 +184,12 @@ export class IteratorMethods<T> implements IMethods<T> {
     any<T>(iterator: (entity: T) => boolean): Promise<boolean> {
         return this.filterReturn(this.toList(), (data) => {
             return new AnyClause(iterator).execute(data);
+        });
+    }
+
+    all<T>(iterator: (entity: T) => boolean): Promise<boolean> {
+        return this.filterReturn(this.toList(), (data) => {
+            return new AllClause(iterator).execute(data);
         });
     }
 

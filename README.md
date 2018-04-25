@@ -117,7 +117,7 @@ asyncData.then(data => {
 - [x] selectMany
 - [x] join
 - [x] leftJoin
-- [ ] groupJoin
+- [x] groupJoin
 - [x] orderBy
 - [x] orderByDescending
 - [x] take
@@ -125,7 +125,7 @@ asyncData.then(data => {
 - [x] skip
 - [x] skipWhile
 - [x] groupBy
-- [ ] distinct
+- [x] distinct
 - [ ] concat
 - [ ] zip
 - [ ] union
@@ -137,15 +137,10 @@ asyncData.then(data => {
 - [x] lastOrDefault : `Promise<T | null>`
 - [x] single
 - [x] singleOrDefault
-- [ ] elementAt
-- [ ] elementAtOrDefault
-- [ ] orderByDescending
-- [ ] defaultIfEmpty
 - [x] contains
-- [ ] reserve
 - [ ] sequenceEqual
 - [x] any : `Promise<boolean>`
-- [ ] all
+- [x] all : `Promise<boolean>`
 - [x] count : `Promise<number>`
 - [x] min : `Promise<number>`
 - [x] max : `Promise<number>`

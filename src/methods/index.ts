@@ -21,3 +21,4 @@ export * from './sum';
 export * from './take';
 export * from './takeWhile';
 export * from './where';
+export * from './all';
