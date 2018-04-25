@@ -4,6 +4,7 @@
         "importHelpers": true,
         "sourceMap": true,
         "outDir": "./dist",
+        "rootDir": "src",
         "moduleResolution": "node",
         // "module": "amd",
         "emitDecoratorMetadata": true,
@@ -15,6 +16,17 @@
         "lib": [
             "es2017",
             "dom"
-        ]
-    }
+        ],
+        "paths": {
+            "tslib": [
+                "tslib"
+            ]
+        },
+        "baseUrl": "./",
+        "declaration": true,
+    },
+    "exclude": [
+        "demo",
+        "test"       
+    ]
 }

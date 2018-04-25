@@ -3,7 +3,7 @@ const HTMLWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: {
-        index: './demo/index.js',
+        index: './demo/webpack/index.js',
     },
     plugins: [
         new HTMLWebpackPlugin({
@@ -12,6 +12,6 @@ module.exports = {
     ],
     output: {
         filename: '[name].bundle.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist/browser-test')
     }
 };
