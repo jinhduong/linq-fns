@@ -37,10 +37,10 @@ export class Utils {
             const obj2IsObject = typeof obj2 === 'object';
 
             if (objIsObject && obj2IsObject) {
-                const props = Object.keys(objIsObject);
+                const props = Object.keys(obj);
 
                 for (let i = 0, li = props.length; i < li; i++) {
-                    const result = this.compare(objIsObject[props[i]], obj2IsObject[props[i]]);
+                    const result = this.compare(obj[props[i]], obj2[props[i]]);
                     if (!result) return false;
                 }
 

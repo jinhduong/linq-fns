@@ -4,7 +4,8 @@ import {
     WhereClause, SelectClause, SelectManyClause, JoinClause, LeftJoinClause, OrderByClause,
     OrderByDescendingClause, GroupByClause, GroupJoinClause, FirstClause, LastClause, CountClause,
     SumClause, AvarageClause, MinClause, MaxClause, SingleClause, TakeClause, SkipWhileClause,
-    SkipClause, TakeWhileClause, AnyClause, ContainsClause, AllClause, DistinctClause, ConcatClause
+    SkipClause, TakeWhileClause, AnyClause, ContainsClause, AllClause, DistinctClause, ConcatClause, UnionClause, ZipClause, ExceptClause, IntersectClasue, SequenceEqualClause, AggregateClause,
+
 } from "../methods";
 import { Queryable } from './queryable';
 
@@ -82,6 +83,26 @@ export class IteratorMethods<T> implements IMethods<T> {
 
     concat(another: T[] | Promise<T[]>): IMethods<T> {
         this._iteratorCollection.push(new ConcatClause(another));
+        return this;
+    }
+
+    union(another: T[] | Promise<T[]>): IMethods<T> {
+        this._iteratorCollection.push(new UnionClause(another as any));
+        return this;
+    }
+
+    zip<S>(another: S[] | Promise<S[]>, iterator?: (item1: T, item2: S) => any): IMethods<[T, S] | any> {
+        this._iteratorCollection.push(new ZipClause(another as any, iterator));
+        return this;
+    }
+
+    except(another: T[] | Promise<T[]>): IMethods<T> {
+        this._iteratorCollection.push(new ExceptClause(another as any));
+        return this;
+    }
+
+    intersect(another: T[] | Promise<T[]>): IMethods<T> {
+        this._iteratorCollection.push(new IntersectClasue(another as any));
         return this;
     }
 
@@ -194,6 +215,23 @@ export class IteratorMethods<T> implements IMethods<T> {
     contains(entity: T): Promise<boolean> {
         return this.filterReturn(this.toList(), (data) => {
             return new ContainsClause(entity).execute(data);
+        });
+    }
+
+    sequencyEqual(another: T[] | Promise<T[]>): Promise<boolean> {
+        return this.filterReturn(this.toList(), (data) => {
+            if (Utils.isPromise(another)) {
+                return (another as Promise<T[]>).then(anotherData => {
+                    return new SequenceEqualClause(anotherData).execute(data);
+                });
+            }
+            return new SequenceEqualClause(another as T[]).execute(data);
+        });
+    }
+
+    aggregate(iterator: (accumulator: any, inital: T, index?: number) => any): Promise<any> {
+        return this.filterReturn(this.toList(), (data) => {
+            return (new AggregateClause<T>(iterator).execute(data));
         });
     }
 

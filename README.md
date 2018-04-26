@@ -1,8 +1,8 @@
-# 👴 eslinq
+# 👴 linq-fns
 .NET LINQ for Javascript, written by TypeScript.
-- Provide `IQueryable<T>`, it's reusable, also variable and use `iterator list` for holding query and execute.
+- Provide `Queryable<T>`, it's reusable, also variable and use `Iterator collection` for holding query and execute.
 - Contains almost the original .NET and some extends methods.
-- Support `Promise` like a input source.
+- Support `Promise` like as a input source.
 - All `APIs` like a Javascript native methods so easily, simply implementation.
 
 ### Basic example
@@ -126,11 +126,11 @@ asyncData.then(data => {
 - [x] skipWhile
 - [x] groupBy
 - [x] distinct
-- [ ] concat
-- [ ] zip
-- [ ] union
-- [ ] intersect
-- [ ] except
+- [x] concat
+- [x] zip
+- [x] union
+- [x] intersect
+- [x] except
 - [x] first : `Promise<T>`
 - [x] firstOrDefault : `Promise<T | null>`
 - [x] last : `Promise<T>`
@@ -138,7 +138,7 @@ asyncData.then(data => {
 - [x] single
 - [x] singleOrDefault
 - [x] contains
-- [ ] sequenceEqual
+- [x] sequenceEqual
 - [x] any : `Promise<boolean>`
 - [x] all : `Promise<boolean>`
 - [x] count : `Promise<number>`
@@ -146,9 +146,8 @@ asyncData.then(data => {
 - [x] max : `Promise<number>`
 - [x] sum : `Promise<number>`
 - [x] average
-- [ ] aggregate
+- [x] aggregate
 - [x] toList : `Promise<T[]>`
-
 
 ### License
 
