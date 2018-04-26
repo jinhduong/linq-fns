@@ -24,7 +24,7 @@ export interface IMethods<T> {
     zip<S>(another: S[] | Promise<S[]>, iterator?: (item1: T, item2: S) => any): IMethods<[T | S] | any>
 
     // Execute methods
-    toList<S extends T>(): Promise<S[]>;
+    toList<S extends T>(): Promise<S[]| S[]>;
 
     sum<S>(iterator: (entity: T) => S): Promise<number>;
     min<S>(iterator: (entity: T) => S): Promise<number>;

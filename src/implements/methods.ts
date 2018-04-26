@@ -272,28 +272,26 @@ export class IteratorMethods<T> implements IMethods<T> {
         else
             _promises.unshift(Promise.resolve(this._source));
 
-        return new Promise(resolve => {
-            Promise.all(_promises).then((responseDatas: any[]) => {
+        return Promise.all(_promises).then((responseDatas: any[]) => {
 
-                let _index = 0;
-                _result = responseDatas[0]; // Set from method's source
+            let _index = 0;
+            _result = responseDatas[0]; // Set from method's source
 
-                for (let i = 0, li = this._iteratorCollection.length; i < li; i++) {
+            for (let i = 0, li = this._iteratorCollection.length; i < li; i++) {
 
-                    let _iterator = this._iteratorCollection[i];
+                let _iterator = this._iteratorCollection[i];
 
-                    if (_iterator.hasSource()) {
-                        _iterator.replaceBySyncSource(responseDatas[_index + 1]);
-                        _index += 1;
-                    }
+                if (_iterator.hasSource()) {
+                    _iterator.replaceBySyncSource(responseDatas[_index + 1]);
+                    _index += 1;
                 }
+            }
 
-                this._iteratorCollection.forEach((ite: IIterator<T>) => {
-                    _result = ite.execute(_result) as T[];
-                });
-
-                resolve(_result);
+            this._iteratorCollection.forEach((ite: IIterator<T>) => {
+                _result = ite.execute(_result) as T[];
             });
+
+            return _result;
         });
     }
 }

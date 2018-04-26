@@ -7,13 +7,20 @@
     "test": "mocha -r ts-node/register test/*.ts",
     "demo": "tsc --sourceMap demo/typescript/index.ts",
     "clean": "gulp clean",
-    "browser": "webpack -p && gulp rl"
+    "browser": "webpack -p && gulp rl",
+    "lib": "gulp clean-npm && gulp npmrl"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jinhduong/linq-fns.git"
   },
-  "keywords": [],
+  "keywords": [
+    "linq-fns",
+    "jslinq",
+    "js-linq",
+    "javascript linq",
+    "ts-linq"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -27,6 +34,7 @@
     "chai": "^4.1.2",
     "console.table": "^0.10.0",
     "del": "^3.0.0",
+    "firebase-admin": "^5.12.0",
     "gulp": "^3.9.1",
     "html-webpack-plugin": "^3.2.0",
     "mocha": "^5.1.1",
