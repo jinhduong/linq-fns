@@ -23,7 +23,7 @@
             ]
         },
         "baseUrl": "./",
-        "declaration": true,
+        // "declaration": true,
     },
     "exclude": [
         "demo",

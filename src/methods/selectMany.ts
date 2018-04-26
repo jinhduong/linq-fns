@@ -6,7 +6,7 @@ export class SelectManyClause<T> extends BaseIterator<T> implements IIterator<T>
 
     _iterator: (item: T, index?: number) => any;
 
-    execute(source: any[] | T[]): T[] | any[] {
+    execute(source: T[]): any[] {
         if (!source) return null;
 
         let _result = new SelectClause(this._iterator).execute(source);

@@ -6,10 +6,13 @@ export class SumClause<T> extends BaseIterator<T> implements IIterator<T> {
 
     _iterator: (item: T) => any;
 
-    execute(source: any[] | T[]): T[] | T | any {
+    execute(source: T[]): number {
         if (!source) return 0;
 
-        let _result = new SelectClause(this._iterator).execute(source) as number[];
+        let _result;
+
+        if (this._iterator)
+            _result = new SelectClause(this._iterator).execute(source) as number[];
 
         if (!_result) return 0;
 

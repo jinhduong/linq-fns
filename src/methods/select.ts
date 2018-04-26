@@ -5,7 +5,7 @@ export class SelectClause<T> extends BaseIterator<T> implements IIterator<T> {
 
     _iterator: (item: T) => boolean;
 
-    execute(source: any[] | T[]): T[] | any[] {
+    execute(source: T[]): any[]{
         if (source) {
             return (source as T[]).map(x => (this._iterator(x)));
         }

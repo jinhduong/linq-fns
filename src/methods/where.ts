@@ -5,7 +5,7 @@ export class WhereClause<T> extends BaseIterator<T> implements IIterator<T> {
 
     _iterator: (item: T) => boolean;
 
-    execute(source: any[] | T[]): T[] | any[] {
+    execute(source: T[]): T[]{
         if (source) {
             return (source as T[]).filter((x) => {
                 return this._iterator(x);

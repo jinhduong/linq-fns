@@ -6,7 +6,7 @@ export class OrderByClause<T> extends BaseIterator<T> implements IIterator<T> {
 
     _iterator: (item: T) => any;
 
-    execute(source: T[]): T[] | any[] {
+    execute(source: T[]): T[] {
 
         if (!source) return null;
 

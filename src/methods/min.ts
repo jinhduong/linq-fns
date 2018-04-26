@@ -6,14 +6,17 @@ export class MinClause<T> extends BaseIterator<T> implements IIterator<T> {
 
     _iterator: (item: T) => any;
 
-    execute(source: any[] | T[]): T[] | T | any {
+    execute(source: T[]): number {
         if (!source) return 0;
 
-        let _result = new SelectClause(this._iterator).execute(source) as number[];
+        let _result;
+        
+        if(this._iterator)
+            _result = new SelectClause(this._iterator).execute(source) as number[];
 
         if (!_result) return 0;
 
-        if (!Number.isNaN(_result[0])) throw new Error("Sum operator require type of number");
+        if (!Number.isNaN(_result[0])) throw new Error("Min operator require type of number");
 
         return Math.min(..._result);
     }

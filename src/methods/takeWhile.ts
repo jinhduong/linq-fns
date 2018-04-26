@@ -6,7 +6,7 @@ export class TakeWhileClause<T> extends BaseIterator<T> implements IIterator<T> 
 
     _iterator: (item: T) => boolean;
 
-    execute(source: any[] | T[]): T[] | any[] {
+    execute(source: T[]): T[]{
         if (source) {
             let _takeCount = 0;
             for (let i = 0; i < (source as T[]).length; i++) {
@@ -14,7 +14,7 @@ export class TakeWhileClause<T> extends BaseIterator<T> implements IIterator<T> 
                 if (this._iterator(_item)) break;
                 _takeCount += 1;
             }
-            return new TakeClause(_takeCount).execute(source);
+            return new TakeClause<T>(_takeCount).execute(source);
         }
         return null;
     }

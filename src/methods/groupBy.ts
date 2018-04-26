@@ -1,6 +1,7 @@
 import { IIterator } from "../intefaces/iterator.interface";
 import { SelectClause } from "./select";
 import { BaseIterator } from "../implements/baseIterator";
+import { Utils } from '../utils';
 
 export class GroupByClause<T> extends BaseIterator<T> implements IIterator<T> {
 
@@ -13,7 +14,7 @@ export class GroupByClause<T> extends BaseIterator<T> implements IIterator<T> {
         let _mappingSource = {}; // Object contains all data in array follow by [index] : {object}
         let _indexes = [] as Array<{ value, index }>; // Make indexes table base on iterator function
         let _groupByObj = {} // Object contains [groupByValue] : <any>[]
-        let _distinctGroupByValues = this.distinct
+        let _distinctGroupByValues = Utils.distinct
             (new SelectClause(this._iterator).execute(source));
 
         // Make mapping source by indexes
@@ -51,11 +52,5 @@ export class GroupByClause<T> extends BaseIterator<T> implements IIterator<T> {
     constructor(func: (item: T) => any) {
         super();
         this._iterator = func;
-    }
-
-    private distinct(array: any[]) {
-        return array.filter((val, index, self) => {
-            return self.indexOf(val) === index;
-        }).filter(x => x != undefined);
     }
 }

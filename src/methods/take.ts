@@ -5,7 +5,7 @@ export class TakeClause<T> extends BaseIterator<T> implements IIterator<T> {
 
     _iterator: number;
 
-    execute(source: any[] | T[]): T[] | any[] {
+    execute(source: T[]): T[]{
         if (source) {
             return (source as T[]).slice(0, this._iterator);
         }

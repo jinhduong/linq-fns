@@ -1,5 +1,6 @@
 import { IIterator } from "../intefaces/iterator.interface";
 import { BaseIterator } from "../implements/baseIterator";
+import { Utils } from '../utils';
 
 export class ContainsClause<T> extends BaseIterator<T> implements IIterator<T> {
 
@@ -11,7 +12,7 @@ export class ContainsClause<T> extends BaseIterator<T> implements IIterator<T> {
 
         let _flag = false;
         for (let i = 0, li = source.length; i < li; i++) {
-            if (source[i] === this._entity) {
+            if (Utils.compare(source[i], this._entity)) {
                 _flag = true;
                 break;
             }

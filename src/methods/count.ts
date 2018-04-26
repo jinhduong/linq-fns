@@ -5,13 +5,13 @@ export class CountClause<T> extends BaseIterator<T> implements IIterator<T> {
 
     _iterator: (item: T) => boolean;
 
-    execute(source: any[] | T[]): T[] | T | any {
-        if (!source) return source.length;
+    execute(source: T[]): number {
+        if (!source) return 0;
         else if (!this._iterator) return source.length;
         else {
             return (source as T[]).filter((x) => {
                 return this._iterator(x);
-            }).length;
+            }).length || 0;
         }
     }
 

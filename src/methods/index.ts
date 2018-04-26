@@ -22,3 +22,5 @@ export * from './take';
 export * from './takeWhile';
 export * from './where';
 export * from './all';
+export * from './concat';
+export * from './distinct';

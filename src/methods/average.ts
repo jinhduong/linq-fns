@@ -6,12 +6,12 @@ export class AvarageClause<T> extends BaseIterator<T> implements IIterator<T> {
 
     _iterator: (item: T) => any;
 
-    execute(source: any[] | T[]): T[] | T | any {
+    execute(source: T[]): number {
         if (!source) return 0;
 
-        let _result = this._iterator
+        let _result = (this._iterator
             ? new SelectClause(this._iterator).execute(source) as number[]
-            : source;
+            : source) as number[];
 
         if (!_result) return 0;
         if (Number.isNaN(_result[0])) throw new Error("Avarage operator need type of number");
