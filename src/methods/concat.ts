@@ -1,4 +1,4 @@
-import { BaseIterator } from '../implements';
+import { BaseIterator } from '../implements/index';
 import { IIterator } from '../intefaces';
 
 export class ConcatClause<T> extends BaseIterator<T> implements IIterator<T>{

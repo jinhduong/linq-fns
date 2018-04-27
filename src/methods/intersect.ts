@@ -1,6 +1,6 @@
-import { BaseIterator } from '../implements';
+import { BaseIterator } from '../implements/index';
 import { IIterator } from '../intefaces';
-import { Utils } from '../utils';
+import { Utils } from '../utils/index';
 import { DistinctClause } from '.';
 
 export class IntersectClasue<T> extends BaseIterator<T> implements IIterator<T>{

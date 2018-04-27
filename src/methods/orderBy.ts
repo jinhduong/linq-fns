@@ -44,4 +44,4 @@ export class OrderByClause<T> extends BaseIterator<T> implements IIterator<T> {
         super();
         this._iterator = func;
     }
-}
+};

@@ -1,4 +1,4 @@
-import { BaseIterator } from '../implements';
+import { BaseIterator } from '../implements/index';
 import { IIterator } from '../intefaces';
 
 export class ZipClause<T, S> extends BaseIterator<T> implements IIterator<T>{

@@ -1,6 +1,6 @@
 import { IIterator } from "../intefaces/iterator.interface";
 import { BaseIterator } from "../implements/baseIterator";
-import { Utils } from '../utils';
+import { Utils } from '../utils/index';
 
 export class ContainsClause<T> extends BaseIterator<T> implements IIterator<T> {
 

@@ -1,6 +1,6 @@
 import { IIterator } from '../intefaces';
-import { BaseIterator } from '../implements';
-import { Utils } from '../utils';
+import { BaseIterator } from '../implements/index';
+import { Utils } from '../utils/index';
 
 export class DistinctClause<T> extends BaseIterator<T> implements IIterator<T> {
     _comparer: (aEntity: T, bEntity: T) => boolean;

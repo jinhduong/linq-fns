@@ -1,12 +1,12 @@
-import { IMethods, IIterator } from "../intefaces";
-import { Utils } from '../utils';
+import { IMethods, IIterator } from "../intefaces/index";
+import { Utils } from '../utils/index';
 import {
     WhereClause, SelectClause, SelectManyClause, JoinClause, LeftJoinClause, OrderByClause,
     OrderByDescendingClause, GroupByClause, GroupJoinClause, FirstClause, LastClause, CountClause,
     SumClause, AvarageClause, MinClause, MaxClause, SingleClause, TakeClause, SkipWhileClause,
     SkipClause, TakeWhileClause, AnyClause, ContainsClause, AllClause, DistinctClause, ConcatClause, UnionClause, ZipClause, ExceptClause, IntersectClasue, SequenceEqualClause, AggregateClause,
 
-} from "../methods";
+} from "../methods/index";
 import { Queryable } from './queryable';
 
 export class IteratorMethods<T> implements IMethods<T> {

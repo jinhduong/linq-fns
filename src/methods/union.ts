@@ -1,4 +1,4 @@
-import { BaseIterator } from '../implements';
+import { BaseIterator } from '../implements/index';
 import { IIterator } from '../intefaces';
 import { DistinctClause } from '.';
 

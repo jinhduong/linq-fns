@@ -3,7 +3,7 @@ import { IIterator } from "../intefaces/iterator.interface";
 export class BaseIterator<T> implements IIterator<T> {
     nextSource: any[] | Promise<any>;
 
-    replaceBySyncSource?(syncSource: T[]) {
+    replaceBySyncSource(syncSource: T[]) {
         this.nextSource = syncSource;
     }
 
