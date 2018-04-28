@@ -5,33 +5,31 @@ import { IMethods } from '../intefaces';
 const admin = require('firebase-admin');
 
 export class FireBaseQueryale {
+
     _db: database.Database;
 
     constructor(db: database.Database) {
         this._db = db;
     }
 
-    getQuery<T>(name: string, limitType?: 'first' | 'last', limit?: number): IMethods<T> {
-        const promise = this.getPromiseSource(name, limitType, limit);
-        return Queryable.from(promise) as IMethods<T>;
-    }
+    getRepository<T>(repoName: string,
+        predicate: (ref: database.Reference) => database.Query,
+        action: database.EventType = "value"): IMethods<T> {
 
-    getPromiseSource<T>(name: string, limitType?: 'first' | 'last', limit?: number): Promise<T[]> {
-        let _methodName = (limitType === 'first' ? 'limitToFirst' : 'limitToLast');
-        const ref = this.getRefObject(name);
-        const promise: Promise<T[]> = new Promise((resolve, reject) => {
-            (limitType ? ref[_methodName](limit) : ref)['on']('value', (snapshot) => {
-                const _data: Object = snapshot.val();
-                if (!_data)
-                    return resolve([]);
-                const _arrayedData = Object.keys(_data).map(prop => {
-                    _data[prop]['__id'] = prop;
-                    return _data[prop];
-                });
-                resolve(_arrayedData);
-            });
-        });
-        return promise;
+        const ref = this.getRefObject(repoName);
+        return Queryable.from(
+            new Promise<T[]>((resolve, reject) => {
+                if (!predicate)
+                    ref.on(action, (snapshot) => {
+                        resolve(snapshot.val());
+                    });
+                else {
+                    const query = predicate(ref);
+                    query.on(action, (snapshot) => {
+                        resolve(snapshot.val());
+                    });
+                }
+            }));
     }
 
     private getRefObject(name: string): database.Reference {
