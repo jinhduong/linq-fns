@@ -7,7 +7,14 @@
 - 📊 Have some drivers for `firebase realtime db` or any storage libraries...
 
 ### Basic example
+#### Node or browser
 ```ts
+// ES6
+import { Queryable } from 'linq-fns';
+
+// ES5
+const Queryable = require('linq-fns').Queryable;
+
 let query = Queryable
             .from(nations)
             .join(continents, (x, y) => x.areaId === y.id)
@@ -26,6 +33,25 @@ asyncData.then(data => {
     //     {area:'South Ameria', total: 1}
     // ]
 });
+```
+
+#### Firebase
+``` ts
+const FireBaseQueryale = require('linq-fns').FireBaseQueryale;
+const admin = require('firebase-admin');
+const serviceAccount = require('./serviceAccountKey');
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: 'https://xxx.firebaseio.com'
+});
+
+const db = admin.database();
+const firebaseQuery = new FireBaseQueryale(db);
+
+const postsQuery = firebaseQuery.getRepository('<rootTable>.<childTables>.<child...>');
+// Then using like Queryable Apis 
+
 ```
 
 ### Process

@@ -33,6 +33,7 @@ export class FireBaseQueryale {
     }
 
     private convert<T>(objData: Object): T[] {
+        if (!objData) return [];
         return Object.keys(objData).map(prop => {
             objData[prop]['__id'] = prop;
             return objData[prop];
