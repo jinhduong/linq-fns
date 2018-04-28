@@ -38,6 +38,8 @@
     "gulp": "^3.9.1",
     "html-webpack-plugin": "^3.2.0",
     "mocha": "^5.1.1",
+    "rollup-plugin-typescript": "^0.8.1",
+    "rollup-plugin-uglify": "^3.0.0",
     "ts-node": "^6.0.0",
     "typedoc": "^0.11.1",
     "typescript": "^2.8.1",

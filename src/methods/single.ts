@@ -1,7 +1,7 @@
 import { IIterator } from "../intefaces/iterator.interface";
 import { WhereClause } from "./where";
 import { BaseIterator } from "../implements/baseIterator";
-import { Utils } from '../utils';
+import { Utils } from '../utils/index';
 
 export class SingleClause<T> extends BaseIterator<T> implements IIterator<T> {
 
