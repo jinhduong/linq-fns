@@ -6,6 +6,10 @@
 - 🙅 All `APIs` like a Javascript native methods so easily, simply implementation.
 - 📊 Includes some simple drivers. (like as `firebase real db`) 
 
+```js
+npm i linq-fns --save
+```
+
 ### Basic example
 #### Node or browser
 ```ts
