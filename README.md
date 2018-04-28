@@ -7,10 +7,12 @@
 - 📊 Includes some simple drivers. (like as `firebase real db`) 
 
 ```js
-npm i linq-fns --save
+npm install linq-fns --save
 ```
 
-### Basic example
+> This version just alpha so if have any problem, don't hesitate to let me know. 👋
+
+### Basic exampl
 #### Node or browser
 ```ts
 // ES6
@@ -51,14 +53,28 @@ admin.initializeApp({
 });
 
 const db = admin.database();
-const firebaseQuery = new FireBaseQueryale(db);
+const postsQuery = new FireBaseQueryale(db,'<yourdb>.posts');
 
-const postsQuery = firebaseQuery.getRepository('<rootTable>.<childTables>.<child...>');
-// Then using like Queryable Apis 
+// READ AND QUERY DATA
+// ES5 Promise
+postsQuery.getQuery().where('...').select('...').toList().then(x=>'...');
+
+// Async/await
+const data = await postsQuery.getQuery().where('...').select('...').toList();
+
+// WRITE DATA
+// Just call not execute to server
+postsQuery.add(item);
+postsQuery.remove(item);
+postsQuery.update(item);
+
+// Call this to execute 3 above methods
+postsQuery.commitChanges();
 
 ```
 
 ### Process
+#### 1.Methods
 - [x] from
 - [x] where
 - [x] select
@@ -96,6 +112,11 @@ const postsQuery = firebaseQuery.getRepository('<rootTable>.<childTables>.<child
 - [x] average
 - [x] aggregate
 - [x] toList : `Promise<T[]>`
+
+#### 2. Drivers
+- [x] Firebase
+- [ ] Localstorage
+- [ ] ...
 
 ### License
 

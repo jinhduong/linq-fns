@@ -1,36 +1,66 @@
 import { database } from './database.interface';
 import { Queryable } from '..';
 import { IMethods } from '../intefaces';
+import { IRepository } from './interfaces/repository.interface';
+import { BaseRepository } from './base.repository';
 
-const admin = require('firebase-admin');
+export class FireBaseQueryale<T> extends BaseRepository<T> implements IRepository<T> {
 
-export class FireBaseQueryale {
+    private _repoName = '';
+    private _ref: database.Reference;
+    private _db: database.Database;
 
-    _db: database.Database;
-
-    constructor(db: database.Database) {
+    constructor(db: database.Database, repoName: string) {
+        super();
         this._db = db;
+        this._repoName = repoName;
+        this._ref = this.getRefObject(this._repoName);
     }
 
-    getRepository<T>(repoName: string,
+    getQuery(
         predicate: (ref: database.Reference) => database.Query,
         action: database.EventType = "value"): IMethods<T> {
 
-        const ref = this.getRefObject(repoName);
         return Queryable.from(
             new Promise<T[]>((resolve, reject) => {
                 if (!predicate)
-                    ref.on(action, (snapshot) => {
+                    this._ref.on(action, (snapshot) => {
                         resolve(this.convert(snapshot.val()));
                     });
                 else {
-                    const query = predicate(ref);
+                    const query = predicate(this._ref);
                     query.on(action, (snapshot) => {
                         resolve(this.convert(snapshot.val()));
                     });
                 }
             }));
     }
+
+    _add(item: T, callback?: (rs: any) => any) {
+        this._ref.push(item, (rs) => {
+            if (callback) callback(rs);
+        });
+    }
+
+    _update<S extends T & { __id: string }>(item: S, callback?: (rs: any) => any) {
+        const key = item.__id;
+        const objUpdate = {};
+
+        delete item.__id;
+        objUpdate[key] = item;
+
+        this._ref.update(objUpdate, (rs) => {
+            if (callback) callback(rs);
+        });
+    }
+
+    _remove<S extends T & { __id: string }>(item: S, callback?: (rs: any) => any) {
+        this._ref.child(item.__id).remove((rs) => {
+            if (callback) callback(rs);
+        });
+    }
+
+    // Private methods
 
     private convert<T>(objData: Object): T[] {
         if (!objData) return [];
