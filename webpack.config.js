@@ -3,7 +3,7 @@ const HTMLWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: {
-        index: './demo/webpack/index.js',
+        'linq-fns': './dist/browser/linq-fns.js',
     },
     plugins: [
         new HTMLWebpackPlugin({
@@ -11,7 +11,7 @@ module.exports = {
         })
     ],
     output: {
-        filename: '[name].bundle.js',
-        path: path.resolve(__dirname, 'dist/browser-test')
+        filename: `[name].min.js`,
+        path: path.resolve(__dirname, 'dist/browser-lib')
     }
 };

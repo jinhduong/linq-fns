@@ -7,7 +7,7 @@ export class JoinClause<T, S> extends BaseIterator<T> implements IIterator<T> {
 
     nextSource: S[] | Promise<S[]>;
 
-    execute(source: any[] | T[]): T[] | any[] {
+    execute(source: T[]): { x: T, y: S }[] {
         if (source) {
             let _result = [];
             for (let i = 0, li = source.length; i < li; i++) {
@@ -24,7 +24,7 @@ export class JoinClause<T, S> extends BaseIterator<T> implements IIterator<T> {
             }
             return _result;
         }
-        return source;
+        return source as any;
     }
 
     constructor(anotherSource: S[] | Promise<S[]>, func: (item1: T, item2: S) => boolean) {

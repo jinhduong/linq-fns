@@ -6,15 +6,15 @@ export class SkipWhileClause<T> extends BaseIterator<T> implements IIterator<T> 
 
     _iterator: (item: T) => boolean;
 
-    execute(source: any[] | T[]): T[] | any[] {
+    execute(source: T[]): T[]{
         if (source) {
             let _skipCount = 0;
-            for (let i = 0; i < (source as T[]).length; i++) {
+            for (let i = 0; i < source.length; i++) {
                 const _item = source[i];
                 if (this._iterator(_item)) break;
                 _skipCount += 1;
             }
-            return new SkipClause(_skipCount).execute(source);
+            return new SkipClause<T>(_skipCount).execute(source);
         }
         return null;
     }

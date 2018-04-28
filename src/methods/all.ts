@@ -5,7 +5,7 @@ export class AllClause<T> extends BaseIterator<T> implements IIterator<T> {
 
     _iterator: (item: T) => boolean;
 
-    execute(source: T[] | any[]): T[] | T | any {
+    execute(source: T[]): boolean {
         if (!source) return false;
         else {
             return (source as T[]).every((x) => {

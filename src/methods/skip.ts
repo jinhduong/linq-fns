@@ -5,9 +5,9 @@ export class SkipClause<T> extends BaseIterator<T> implements IIterator<T> {
 
     _iterator: number;
 
-    execute(source: any[] | T[]): T[] | any[] {
+    execute(source: T[]): T[]{
         if (source) {
-            return (source as T[]).slice(this._iterator);
+            return source.slice(this._iterator);
         }
         return source;
     }

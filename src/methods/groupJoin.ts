@@ -6,7 +6,7 @@ import { BaseIterator } from "../implements/baseIterator";
 
 export class GroupJoinClause<T, S> extends BaseIterator<T> implements IIterator<T> {
 
-    nextSource: any[] | Promise<any[]>;
+    nextSource: any[];
 
     _joinIterator: (aEntity: T, bEntity: S) => boolean;
 
@@ -34,11 +34,5 @@ export class GroupJoinClause<T, S> extends BaseIterator<T> implements IIterator<
         this._joinIterator = joinIterator;
         this._groupIterator = groupIterator;
         this.nextSource = anotherSource;
-    }
-
-    private distinct(array: any[]) {
-        return array.filter((val, index, self) => {
-            return self.indexOf(val) === index;
-        }).filter(x => x != undefined);
     }
 }

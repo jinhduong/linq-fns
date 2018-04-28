@@ -5,9 +5,9 @@ export class LeftJoinClause<T, S> extends BaseIterator<T> implements IIterator<T
 
     _iterator: (item1: T, item2: S) => boolean;
 
-    nextSource: any[] | Promise<any[]>;
+    nextSource: S[] | Promise<S[]>;
 
-    execute(source: any[] | T[]): T[] | any[] {
+    execute(source: T[]): any[] {
         if (source) {
             let _result = [];
             for (let i = 0, li = source.length; i < li; i++) {

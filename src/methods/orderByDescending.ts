@@ -6,7 +6,7 @@ export class OrderByDescendingClause<T> extends BaseIterator<T> implements IIter
 
     _iterator: (item: T) => any;
 
-    execute(source: T[]): T[] | any[] {
+    execute(source: T[]): T[] {
 
         if (!source) return null;
 

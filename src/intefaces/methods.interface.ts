@@ -18,9 +18,13 @@ export interface IMethods<T> {
     groupJoin<S>(source: S[] | Promise<S[]>, joinIterator: (aEntity: T, bEntity: S) => boolean, groupIterator: (entity: { x: T, y: S }) => any): IMethods<{ key: any, items: T[] }>;
     distinct(comparer?: (aEntity: T, bEntity: T) => boolean): IMethods<T>
     concat(another: T[] | Promise<T[]>): IMethods<T>
+    union(another: T[] | Promise<T[]>): IMethods<T>
+    intersect(another: T[] | Promise<T[]>): IMethods<T>
+    except(another: T[] | Promise<T[]>): IMethods<T>
+    zip<S>(another: S[] | Promise<S[]>, iterator?: (item1: T, item2: S) => any): IMethods<[T | S] | any>
 
     // Execute methods
-    toList<S extends T>(): Promise<S[]>;
+    toList<S extends T>(): Promise<S[]| S[]>;
 
     sum<S>(iterator: (entity: T) => S): Promise<number>;
     min<S>(iterator: (entity: T) => S): Promise<number>;
@@ -29,6 +33,8 @@ export interface IMethods<T> {
     any<T>(iterator: (entity: T) => boolean): Promise<boolean>;
     all<T>(iterator: (entity: T) => boolean): Promise<boolean>;
     contains(entity: T): Promise<boolean>;
+    aggregate(iterator: (accumulator: T, inital: T, index?: number) => any): Promise<any>;
+    sequencyEqual(another: T[] | Promise<T[]>): Promise<boolean>;
 
     // Methods with optional iterator
     first(iterator?: (entity: T) => boolean): Promise<T>;

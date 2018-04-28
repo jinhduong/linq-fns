@@ -5,10 +5,9 @@ export class FirstClause<T> extends BaseIterator<T> implements IIterator<T> {
 
     _iterator: (item: T) => boolean;
 
-    execute(source: any[] | T[]): T[] | T {
-        if (!this._iterator) {
+    execute(source: T[]): T {
+        if (!this._iterator)
             return source[0];
-        }
         else {
             return (source as T[]).filter((x) => {
                 return this._iterator(x);
