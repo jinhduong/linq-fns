@@ -1,6 +1,6 @@
-import { BaseIterator } from '../implements';
+import { BaseIterator } from '../implements/index';
 import { IIterator } from '../intefaces';
-import { Utils } from '../utils';
+import { Utils } from '../utils/index';
 import { SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION } from 'constants';
 
 export class ExceptClause<T> extends BaseIterator<T> implements IIterator<T>{

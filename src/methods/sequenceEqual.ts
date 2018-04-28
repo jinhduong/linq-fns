@@ -1,6 +1,6 @@
-import { BaseIterator } from '../implements';
+import { BaseIterator } from '../implements/index';
 import { IIterator } from '../intefaces';
-import { Utils } from '../utils';
+import { Utils } from '../utils/index';
 
 export class SequenceEqualClause<T> extends BaseIterator<T> implements IIterator<T>{
     nextSource;

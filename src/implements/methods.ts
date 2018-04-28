@@ -1,12 +1,12 @@
-import { IMethods, IIterator } from "../intefaces";
-import { Utils } from '../utils';
+import { IMethods, IIterator } from "../intefaces/index";
+import { Utils } from '../utils/index';
 import {
     WhereClause, SelectClause, SelectManyClause, JoinClause, LeftJoinClause, OrderByClause,
     OrderByDescendingClause, GroupByClause, GroupJoinClause, FirstClause, LastClause, CountClause,
     SumClause, AvarageClause, MinClause, MaxClause, SingleClause, TakeClause, SkipWhileClause,
     SkipClause, TakeWhileClause, AnyClause, ContainsClause, AllClause, DistinctClause, ConcatClause, UnionClause, ZipClause, ExceptClause, IntersectClasue, SequenceEqualClause, AggregateClause,
 
-} from "../methods";
+} from "../methods/index";
 import { Queryable } from './queryable';
 
 export class IteratorMethods<T> implements IMethods<T> {
@@ -272,28 +272,26 @@ export class IteratorMethods<T> implements IMethods<T> {
         else
             _promises.unshift(Promise.resolve(this._source));
 
-        return new Promise(resolve => {
-            Promise.all(_promises).then((responseDatas: any[]) => {
+        return Promise.all(_promises).then((responseDatas: any[]) => {
 
-                let _index = 0;
-                _result = responseDatas[0]; // Set from method's source
+            let _index = 0;
+            _result = responseDatas[0]; // Set from method's source
 
-                for (let i = 0, li = this._iteratorCollection.length; i < li; i++) {
+            for (let i = 0, li = this._iteratorCollection.length; i < li; i++) {
 
-                    let _iterator = this._iteratorCollection[i];
+                let _iterator = this._iteratorCollection[i];
 
-                    if (_iterator.hasSource()) {
-                        _iterator.replaceBySyncSource(responseDatas[_index + 1]);
-                        _index += 1;
-                    }
+                if (_iterator.hasSource()) {
+                    _iterator.replaceBySyncSource(responseDatas[_index + 1]);
+                    _index += 1;
                 }
+            }
 
-                this._iteratorCollection.forEach((ite: IIterator<T>) => {
-                    _result = ite.execute(_result) as T[];
-                });
-
-                resolve(_result);
+            this._iteratorCollection.forEach((ite: IIterator<T>) => {
+                _result = ite.execute(_result) as T[];
             });
+
+            return _result;
         });
     }
 }

@@ -1,4 +1,4 @@
-import { Queryable } from '../implements';
+import { Queryable } from '../implements/index';
 import { precompile } from 'handlebars';
 const cTable = require('console.table');
 
