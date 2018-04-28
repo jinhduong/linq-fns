@@ -4,7 +4,7 @@
 - 🔨 Contains almost the original .NET and some extends methods.
 - 🔨 Support `Promise` like as a input source.
 - 🙅 All `APIs` like a Javascript native methods so easily, simply implementation.
-- 📊 Have some drivers for `firebase realtime db` or any storage libraries...
+- 📊 Includes some simple drivers. (like as `firebase real db`) 
 
 ### Basic example
 #### Node or browser
