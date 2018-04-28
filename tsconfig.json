@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "target": "es6",
+        "target": "es5",
         "importHelpers": true,
         "sourceMap": true,
         "outDir": "./dist",
@@ -23,7 +23,7 @@
             ]
         },
         "baseUrl": "./",
-        // "declaration": true,
+        "declaration": true,
     },
     "exclude": [
         "demo",

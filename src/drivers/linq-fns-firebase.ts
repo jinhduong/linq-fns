@@ -21,15 +21,22 @@ export class FireBaseQueryale {
             new Promise<T[]>((resolve, reject) => {
                 if (!predicate)
                     ref.on(action, (snapshot) => {
-                        resolve(snapshot.val());
+                        resolve(this.convert(snapshot.val()));
                     });
                 else {
                     const query = predicate(ref);
                     query.on(action, (snapshot) => {
-                        resolve(snapshot.val());
+                        resolve(this.convert(snapshot.val()));
                     });
                 }
             }));
+    }
+
+    private convert<T>(objData: Object): T[] {
+        return Object.keys(objData).map(prop => {
+            objData[prop]['__id'] = prop;
+            return objData[prop];
+        });
     }
 
     private getRefObject(name: string): database.Reference {
