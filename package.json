@@ -44,9 +44,12 @@
     "typedoc": "^0.11.1",
     "typescript": "^2.8.1",
     "webpack": "^4.6.0",
+    "webpack-bundle-analyzer": "^2.11.1",
     "webpack-cli": "^2.0.15"
   },
   "dependencies": {
-    "tslib": "^1.9.0"
+    "axios": "^0.18.0",
+    "tslib": "^1.9.0",
+    "uniqid": "^4.1.1"
   }
 }

@@ -6,9 +6,9 @@ export class BaseRepository<T> implements IRepository<T> {
 
     private _methods: { name: 'ADD' | 'UPD' | 'DEL', item: T }[] = [];
 
-    getQuery(predicate: (
+    getQuery(predicate?: (
         ref: database.Reference) => database.Query,
-        action: "value" | "child_added" | "child_changed" | "child_moved" | "child_removed"): IMethods<T> {
+        action?: "value" | "child_added" | "child_changed" | "child_moved" | "child_removed"): IMethods<T> {
         throw new Error("Method not implemented.");
     }
 
@@ -40,12 +40,13 @@ export class BaseRepository<T> implements IRepository<T> {
         for (let i = 0, li = this._methods.length; i < li; i++) {
             const _tmp = this._methods[i];
             switch (_tmp.name) {
-                case 'ADD': this._add(_tmp.item);
-                case 'UPD': this._update(_tmp.item);
-                case 'DEL': this._remove(_tmp.item);
+                case 'ADD': this._add(_tmp.item); break;
+                case 'UPD': this._update(_tmp.item); break;
+                case 'DEL': this._remove(_tmp.item); break;
                 default: throw new Error("Method just only add, update, delete");
             }
         }
+        this.finalCallback();
         this._methods = [];
     }
 
@@ -59,5 +60,9 @@ export class BaseRepository<T> implements IRepository<T> {
 
     _update(item: T): void {
         throw new Error("Method not implemented.");
+    }
+
+    finalCallback(): void {
+        return;
     }
 }

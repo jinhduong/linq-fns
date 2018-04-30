@@ -1,5 +1,6 @@
 const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
     entry: {
@@ -7,8 +8,9 @@ module.exports = {
     },
     plugins: [
         new HTMLWebpackPlugin({
-            title: 'Code Splitting'
-        })
+            title: 'linq-fns'
+        }),
+        new BundleAnalyzerPlugin()
     ],
     output: {
         filename: `[name].min.js`,

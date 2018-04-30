@@ -2,13 +2,15 @@ import { IMethods } from '../../intefaces/index';
 import { database } from '../database.interface';
 
 export interface IRepository<T> {
-    getQuery(
-        predicate: (ref: database.Reference) => database.Query,
-        action: database.EventType): IMethods<T>;
+    getQuery: {
+        (predicate?: (ref: database.Reference) => database.Query, action?: database.EventType): IMethods<T>;
+        (): IMethods<T>;
+    };
     add(item: T, autoCommit?: boolean): void;
     remove(item: T, autoCommit?: boolean): void;
     update(item: T, autoCommit?: boolean): void;
     commitChanges(): void;
+    finalCallback(): void;
 
     // methods implements
     _add(item: T, cb?: (rs: any) => any): void;

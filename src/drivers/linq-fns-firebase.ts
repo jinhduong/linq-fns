@@ -18,7 +18,7 @@ export class FireBaseQueryale<T> extends BaseRepository<T> implements IRepositor
     }
 
     getQuery(
-        predicate: (ref: database.Reference) => database.Query,
+        predicate?: (ref: database.Reference) => database.Query,
         action: database.EventType = "value"): IMethods<T> {
 
         return Queryable.from(
