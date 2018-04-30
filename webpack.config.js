@@ -5,6 +5,8 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 module.exports = {
     entry: {
         'linq-fns': './dist/browser/linq-fns.js',
+        // 'linq-fns-localStorage': './dist/browser/linq-fns.localStorage.js',
+        // 'linq-fns-gist': './dist/browser/linq-fns.gist.js'
     },
     plugins: [
         new HTMLWebpackPlugin({

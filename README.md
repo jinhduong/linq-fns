@@ -12,7 +12,9 @@ npm install linq-fns --save
 
 > This version just alpha so if have any problem, don't hesitate to let me know. 👋
 
-### Basic exampl
+Browser client files at [Release](https://github.com/jinhduong/linq-fns/tree/master/release) folder.
+
+### Basic example
 #### Node or browser
 ```ts
 // ES6
@@ -73,6 +75,40 @@ postsQuery.commitChanges();
 
 ```
 
+#### localStogare
+```js
+
+// Node
+const LocalStorageQueryable = require('linq-fns').LocalStorageQueryable;
+
+const postsQuery = new LocalStorageQueryable("posts");
+
+postsQuery.add(item);
+postsQuery.remove(item);
+postsQuery.update(item);
+
+// Call this to execute 3 above methods
+postsQuery.commitChanges();
+```
+
+#### gist file
+```js
+
+//Node
+const GistQueryable = require('linq-fns').GistQueryable;
+
+const postsQuery = new GistQueryable(
+    "6d183b7f997819cd5a8354f35c1e471f", // gist file
+    "259f97b96762c9d3a155630de8dcfe1cfaf253ff", // access token
+    "posts") // table name
+
+postsQuery.add(item);
+postsQuery.remove(item);
+postsQuery.update(item);
+postsQuery.commitChanges();
+
+```
+
 ### Process
 #### 1.Methods
 - [x] from
@@ -114,9 +150,9 @@ postsQuery.commitChanges();
 - [x] toList : `Promise<T[]>`
 
 #### 2. Drivers
-- [x] Firebase
-- [ ] Localstorage
-- [ ] Gists Github
+- [x] Firebase : `Node`
+- [x] Localstorage : `Node` & `Browser`
+- [x] Gists Github : `Node` & `Browser`
 - [ ] ...
 
 ### License

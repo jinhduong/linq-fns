@@ -1,2 +1,2 @@
-export { Queryable } from './implements/queryable';
-export { FireBaseQueryale } from './drivers';
+export { Queryable } from './implements';
+export { FireBaseQueryale, GistQueryable, LocalStorageQueryable } from './drivers';
