@@ -98,8 +98,8 @@ postsQuery.commitChanges();
 const GistQueryable = require('linq-fns').GistQueryable;
 
 const postsQuery = new GistQueryable(
-    "6d183b7f997819cd5a8354f35c1e471f", // gist file
-    "259f97b96762c9d3a155630de8dcfe1cfaf253ff", // access token
+    "6d183b7f997819cd5a8354f35c1e471f123", // gist file
+    "259f97b96762c9d3a155630d12321fd1cfaf253ff", // access token
     "posts") // table name
 
 postsQuery.add(item);
