@@ -19,7 +19,6 @@ Browser client files can be found in the [release](https://github.com/jinhduong/
 ```ts
 // ES6
 import { Queryable } from 'linq-fns';
-
 // ES5
 const Queryable = require('linq-fns').Queryable;
 
@@ -30,10 +29,17 @@ let query = Queryable
             .select(x => {
                 return {
                     area: x.key,
-                    total: Queryable.fromSync(x.items).count() // This will return a number, not Promise<number>
+                    total: Queryable.fromSync(x.items).count() 
+                    // This will return a number, not Promise<number>
                 }
             })
-const asyncData = query.toList() // Will return Promise<{area:string, total:number}>
+
+// Async/ await
+const data = await query.toList();
+
+// Promise
+// Will return Promise<{area:string, total:number}>
+const asyncData = query.toList(); 
 asyncData.then(data => {
     console.log(data);
     // [
@@ -55,23 +61,29 @@ admin.initializeApp({
 });
 
 const db = admin.database();
-const postsQuery = new FireBaseQueryable(db,'<yourdb>.posts');
+const postsRepo = new FireBaseQueryable(db,'<yourdb>.posts');
 
 // READ AND QUERY DATA
 // ES5 Promise
-postsQuery.getQuery().where('...').select('...').toList().then(x=>'...');
+postsRepo.getQuery()
+    .where('...')
+    .select('...')
+    .toList().then(x=>'...');
 
 // Async/await
-const data = await postsQuery.getQuery().where('...').select('...').toList();
+const data = await postsRepo.getQuery()
+                            .where('...')
+                            .select('...')
+                            .toList();
 
 // WRITE DATA
 // Prepare calls, but do not send requests to server
-postsQuery.add(item);
-postsQuery.remove(item);
-postsQuery.update(item);
+postsRepo.add(item);
+postsRepo.remove(item);
+postsRepo.update(item);
 
 // Call this to execute 3 above methods
-postsQuery.commitChanges();
+postsRepo.commitChanges();
 
 ```
 
@@ -80,15 +92,14 @@ postsQuery.commitChanges();
 
 // Node
 const LocalStorageQueryable = require('linq-fns').LocalStorageQueryable;
+const postsRepo = new LocalStorageQueryable("posts");
 
-const postsQuery = new LocalStorageQueryable("posts");
-
-postsQuery.add(item);
-postsQuery.remove(item);
-postsQuery.update(item);
+postsRepo.add(item);
+postsRepo.remove(item);
+postsRepo.update(item);
 
 // Call this to execute 3 above methods
-postsQuery.commitChanges();
+postsRepo.commitChanges();
 ```
 
 #### gist file
@@ -96,17 +107,15 @@ postsQuery.commitChanges();
 
 //Node
 const GistQueryable = require('linq-fns').GistQueryable;
-
-const postsQuery = new GistQueryable(
+const postsRepo = new GistQueryable(
     "6d183b7f997819cd5a8354f35c1e471f123", // gist file
     "259f97b96762c9d3a155630d12321fd1cfaf253ff", // access token
     "posts") // table name
 
-postsQuery.add(item);
-postsQuery.remove(item);
-postsQuery.update(item);
-postsQuery.commitChanges();
-
+postsRepo.add(item);
+postsRepo.remove(item);
+postsRepo.update(item);
+postsRepo.commitChanges();
 ```
 
 ### Process
@@ -154,6 +163,9 @@ postsQuery.commitChanges();
 - [x] Localstorage : `Node` & `Browser`
 - [x] Gists Github : `Node` & `Browser`
 - [ ] ...
+
+### Documents
+https://github.com/jinhduong/linq-fns/tree/docs
 
 ### License
 
