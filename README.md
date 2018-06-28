@@ -45,7 +45,7 @@ asyncData.then(data => {
 
 #### Firebase
 ``` ts
-const FireBaseQueryale = require('linq-fns').FireBaseQueryale;
+const FireBaseQueryable = require('linq-fns').FireBaseQueryable;
 const admin = require('firebase-admin');
 const serviceAccount = require('./serviceAccountKey');
 
@@ -55,7 +55,7 @@ admin.initializeApp({
 });
 
 const db = admin.database();
-const postsQuery = new FireBaseQueryale(db,'<yourdb>.posts');
+const postsQuery = new FireBaseQueryable(db,'<yourdb>.posts');
 
 // READ AND QUERY DATA
 // ES5 Promise

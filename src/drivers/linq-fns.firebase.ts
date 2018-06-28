@@ -4,7 +4,7 @@ import { IMethods } from '../intefaces';
 import { IRepository } from './interfaces/repository.interface';
 import { BaseRepository } from './base.repository';
 
-export class FireBaseQueryale<T> extends BaseRepository<T> implements IRepository<T> {
+export class FireBaseQueryable<T> extends BaseRepository<T> implements IRepository<T> {
 
     private _repoName = '';
     private _ref: database.Reference;
