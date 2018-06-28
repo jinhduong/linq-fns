@@ -1,18 +1,18 @@
 # linq-fns
-.NET LINQ functions for Javascript, written by TypeScript.
-- ⚡ Provide `Queryable<T>`, it's reusable, also variable and use `Predicate collection` for holding query and execute later.
-- 🔨 Contains almost the original .NET and some extends methods.
-- 🔨 Support `Promise` like as a input source.
-- 🙅 All `APIs` like a Javascript native methods so easily, simply implementation.
-- 📊 Includes some simple drivers. (like as `firebase real db`) 
+.NET LINQ functions for JavaScript written in TypeScript.
+- ⚡ Provides `Queryable<T>`,which is reusable, variable and uses a *predicate collection* for deferred execution.
+- 🔨 Contains most of the original .NET methods and some additional methods.
+- 🔨 Supports `Promise` as an input source.
+- 🙅 All `APIs` are JavaScript native methods so can be easily incorporated into existing JavaScript projects.
+- 📊 Includes some simple drivers (such as `Firebase Realtime database`).
 
 ```js
 npm install linq-fns --save
 ```
 
-> This version just alpha so if have any problem, don't hesitate to let me know. 👋
+> This version is an alpha release so if you have any problems, please don't hesitate to let me know. 👋
 
-Browser client files at [Release](https://github.com/jinhduong/linq-fns/tree/master/release) folder.
+Browser client files can be found in the [release](https://github.com/jinhduong/linq-fns/tree/master/release) folder.
 
 ### Basic example
 #### Node or browser
@@ -30,7 +30,7 @@ let query = Queryable
             .select(x => {
                 return {
                     area: x.key,
-                    total: Queryable.fromSync(x.items).count() // Here will return number, not Promise<number>
+                    total: Queryable.fromSync(x.items).count() // This will return a number, not Promise<number>
                 }
             })
 const asyncData = query.toList() // Will return Promise<{area:string, total:number}>
@@ -38,7 +38,7 @@ asyncData.then(data => {
     console.log(data);
     // [
     //     {area: 'Euro': total: 2},
-    //     {area:'South Ameria', total: 1}
+    //     {area:'South America', total: 1}
     // ]
 });
 ```
@@ -65,7 +65,7 @@ postsQuery.getQuery().where('...').select('...').toList().then(x=>'...');
 const data = await postsQuery.getQuery().where('...').select('...').toList();
 
 // WRITE DATA
-// Just call not execute to server
+// Prepare calls, but do not send requests to server
 postsQuery.add(item);
 postsQuery.remove(item);
 postsQuery.update(item);
@@ -75,7 +75,7 @@ postsQuery.commitChanges();
 
 ```
 
-#### localStogare
+#### localStorage
 ```js
 
 // Node
