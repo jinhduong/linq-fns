@@ -10,8 +10,6 @@
 npm install linq-fns --save
 ```
 
-> This version is an alpha release so if you have any problems, please don't hesitate to let me know. 👋
-
 Browser client files can be found in the [release](https://github.com/jinhduong/linq-fns/tree/master/release) folder.
 
 ### Basic example
