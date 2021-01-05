@@ -48,7 +48,7 @@
     "webpack-cli": "^2.0.15"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "tslib": "^1.9.0",
     "uniqid": "^4.1.1"
   }
